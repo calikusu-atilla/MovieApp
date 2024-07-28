@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="Frame_bg_color">#FFF7F9FB</color>
+    <color name="Primary_Normal">#FF026670</color>
+    <color name="Secondery_Normal">#FF9FEDD7</color>
+    <color name="Tertiary_Normal">#FFFEF9C7</color>
+    <color name="Quaternary_Normal">#FFFCE181</color>
+    <color name="Normal">#FFEDEAE5</color>
+
+
+
+
+
+
+</resources>

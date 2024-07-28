@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="ring"
+    android:thickness="5dp"
+    android:innerRadiusRatio="2.1"
+    android:useLevel="false">
+<gradient android:startColor="#026670"
+    android:centerColor="@android:color/transparent"
+    android:endColor="#F3BA06"
+    android:angle="315"/>
+</shape>
+
+
+<!-- (ring) şeklinde bir arka plan tanımlayan bir shape bileşenidir
+android:shape="ring": Şekil türünü halka olarak belirler.
+android:thickness="5dp": Halkanın kalınlığını 5 dp (density-independent pixels) olarak ayarlar.
+android:innerRadiusRatio="2.1": Halkanın iç yarıçap oranını 2.1 olarak ayarlar. Bu oran, şeklin boyutuna göre iç yarıçapın boyutunu belirler.
+android:useLevel="false": Şeklin seviye kullanıp kullanmayacağını belirler. Burada false olarak ayarlanmış, yani seviye kullanmaz.
+android:angle="315": Gradyanın açısı. 315 derece, sağ üst köşeden sol alt köşeye doğru bir gradyan oluşturur.
+
+
+Halka şeklinde bir arka plan oluşturur.
+Halkanın kalınlığı 5 dp, iç yarıçapı ise dış yarıçapının 2.1 katıdır.
+Gradyan, koyu yeşil renkten başlayıp şeffaf bir merkez rengine ve ardından sarı renge doğru bir geçiş sağlar.
+Gradyan açısı 315 derece olarak ayarlanmıştır, bu da sağ üst köşeden sol alt köşeye doğru bir renk geçişi oluşturur.
+
+
+-->

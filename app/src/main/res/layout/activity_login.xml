@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Frame_bg_color"
+    tools:context=".presentation.LoginActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_color_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Login in"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="128dp"
+                android:textColor="@color/Tertiary_Normal"
+                android:textStyle="bold"
+                android:textSize="50sp"
+                />
+
+            <EditText
+                android:id="@+id/usernameTxt"
+                android:background="@drawable/btn_blackground"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:layout_marginTop="128dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:inputType="text"
+                android:hint="Username"
+                android:textColor="@color/Primary_Normal"
+                android:textColorHint="@color/Primary_Normal"
+                android:textAlignment="center"/>
+
+            <EditText
+                android:id="@+id/passwordTxt"
+                android:background="@drawable/btn_blackground"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:inputType="textPassword"
+                android:hint="Password"
+                android:textColor="@color/Primary_Normal"
+                android:textColorHint="@color/Primary_Normal"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:id="@+id/forgetPasswordTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Forget Your Password?"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:textColor="@color/Primary_Normal"
+                android:textStyle="bold"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/loginBtn"
+                style="@style/Widget.AppCompat.Button"
+                android:textAllCaps="false"
+                android:background="@drawable/btn_blackground"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginTop="64dp"
+                android:text="Login"
+                android:textStyle="bold"
+                android:textSize="22sp"
+                android:textColor="@color/Primary_Normal"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Don't have an account?"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:layout_marginTop="32dp"
+                android:textColor="@color/Primary_Normal"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/registerTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Register now"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:textColor="@color/Quaternary_Normal"
+                android:textStyle="bold"/>
+
+
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

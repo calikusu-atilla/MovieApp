@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+ layer-list: Çok katmanlı bir arka plan tanımlamak için kullanılır. İçinde birden fazla item (katman) barındırabilir.
+
+ android:gradientRadius="110%p": Gradyan yarıçapı, %110 olarak tanımlanmış. %p, oranın ebeveyn alanının boyutuna göre hesaplanacağı anlamına gelir.
+
+ android:centerX="0.2": Gradyan merkezinin X ekseni boyunca konumu. 0.2, sol kenardan %20 uzaklıkta.
+
+ android:centerY="": Y ekseni boyunca konumu boş bırakılmış, yani varsayılan değer kullanılır (0.5).
+ -->
+
+    <item>
+    <shape>
+        <gradient android:startColor="#026670"
+            android:centerColor="#F7F9FB"
+            android:endColor="#F7F9FB"
+            android:type="radial"
+            android:gradientRadius="110%p"
+            android:centerX="0.2"
+            android:centerY="0.2"/>
+    </shape>
+</item>
+
+    <!-- android:gradientRadius="110%p": Gradyan yarıçapı, %110 olarak tanımlanmış.
+
+    android:centerX="0.6": Gradyan merkezinin X ekseni boyunca konumu. 0.6, sol kenardan %60 uzaklıkta.
+
+    android:centerY="0.8": Gradyan merkezinin Y ekseni boyunca konumu. 0.8, üst kenardan %80 uzaklıkta. -->
+
+    <item>
+        <shape>
+            <gradient android:startColor="#FCE181"
+                android:centerColor="@android:color/transparent"
+                android:endColor="@android:color/transparent"
+                android:gradientRadius="110%p"
+                android:centerX="0.8"
+                android:centerY="0.6"
+                android:type="radial"/>
+        </shape>
+    </item>
+</layer-list>
