@@ -19,6 +19,12 @@ class LoginActivity : BaseActivity() {
         setContentView(view)
 
 
+        binding.loginBtn.setOnClickListener {
+            val intent = Intent (this@LoginActivity, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+
         binding.registerTxt.setOnClickListener {
             val intent = Intent(this@LoginActivity,RegisterActivity::class.java)
             startActivity(intent)

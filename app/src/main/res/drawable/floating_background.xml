@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="oval">
+             <gradient android:startColor="#026670" android:endColor="#FCE181" android:angle="315" />
+    </shape>
+    </item>
+
+    <item android:bottom="3dp" android:top="3dp" android:left="3dp" android:right="3dp">
+        <shape android:shape="oval">
+            <solid android:color="@color/Frame_bg_color"/>
+        </shape>
+    </item>
+
+    <item android:drawable="@drawable/icon" android:top="15dp"
+        android:bottom="15dp" android:right="15dp" android:left="15dp">
+
+    </item>
+
+</layer-list>
+
+
+    <!--
+    Açıklamalar:
+        layer-list: Birden fazla şekli veya diğer grafik kaynaklarını üst üste yerleştirmenize olanak tanır.
+        item: layer-list içinde tanımlanan her bir katmanı temsil eder.
+        shape: Şekil belirler (oval burada oval şekli ifade eder).
+        gradient: Gradyan (renk geçişi) tanımlar.
+        solid: Düz bir renk dolgusu belirtir.
+        drawable: Bir grafik kaynağını belirtir, örneğin bir simge.
+        padding: Katmanlar arasında boşluk bırakmak için kullanılır (top, bottom, left, right).
+    -->

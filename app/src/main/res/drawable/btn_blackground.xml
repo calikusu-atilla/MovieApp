@@ -19,3 +19,14 @@
 
     </item>
 </layer-list>
+
+<!--
+Açıklamalar:
+layer-list: Birden fazla şekli veya diğer grafik kaynaklarını üst üste yerleştirmenize olanak tanır.
+item: layer-list içinde tanımlanan her bir katmanı temsil eder.
+shape: Şekil belirler (rectangle burada dikdörtgen şekli ifade eder).
+corners: Köşelerin yuvarlatılması için kullanılır.
+gradient: Gradyan (renk geçişi) tanımlar.
+size: Şeklin boyutlarını belirtir.
+solid: Düz bir renk dolgusu belirtir.
+-->
