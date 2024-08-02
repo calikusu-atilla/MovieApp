@@ -1,12 +1,7 @@
-package com.example.movieapp.presentation
+package com.example.movieapp.presentation.ui
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.movieapp.R
 import com.example.movieapp.databinding.ActivityLoginBinding
 
 class LoginActivity : BaseActivity() {
@@ -26,7 +21,7 @@ class LoginActivity : BaseActivity() {
 
 
         binding.registerTxt.setOnClickListener {
-            val intent = Intent(this@LoginActivity,RegisterActivity::class.java)
+            val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
             startActivity(intent)
             finish()
         }

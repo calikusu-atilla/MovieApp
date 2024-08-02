@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_color_background"
-    tools:context=".presentation.DetailActivity">
+    tools:context=".presentation.ui.DetailActivity">
 
     <ScrollView
         android:layout_width="match_parent"
