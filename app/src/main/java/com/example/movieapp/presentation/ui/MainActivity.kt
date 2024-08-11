@@ -1,25 +1,20 @@
 package com.example.movieapp.presentation.ui
 
 import android.os.Bundle
-import android.provider.MediaStore.Images
 import android.view.View
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
-import com.example.movieapp.R
 import com.example.movieapp.databinding.ActivityMainBinding
 import com.example.movieapp.domain.model.SliderModel
 import com.example.movieapp.presentation.adapter.SliderAdapter
+import com.example.movieapp.presentation.adapter.TopMoviesAdapter
 import com.example.movieapp.presentation.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.logging.Handler
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
@@ -40,7 +35,19 @@ class MainActivity : BaseActivity() {
 
 
         initBanners()
+        initTopMovies()
 
+    }
+
+    private fun initTopMovies() {
+        binding.progressBarTop.visibility = View.VISIBLE
+
+        viewModel.topMovies.observe(this, Observer {
+            binding.recyclerViewTop.layoutManager = LinearLayoutManager(this@MainActivity,LinearLayoutManager.HORIZONTAL,false)
+            binding.recyclerViewTop.adapter = TopMoviesAdapter(it)
+            binding.progressBarTop.visibility = View.GONE
+        })
+        viewModel.topMovies()
     }
 
     private fun initBanners() {
