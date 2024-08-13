@@ -21,7 +21,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button"
+        android:id="@+id/watchBtn"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="110dp"
         android:layout_height="30dp"
@@ -44,9 +44,10 @@
         android:background="@drawable/stroke_bg"
         android:gravity="center"
         android:paddingStart="8dp"
+        android:textStyle="bold"
         android:paddingEnd="8dp"
         android:text="Year"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -59,17 +60,18 @@
         android:layout_marginBottom="8dp"
         android:background="@drawable/stroke_bg"
         android:gravity="center"
+        android:textStyle="bold"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
         android:text="age"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/yearTxt" />
 
     <TextView
         android:id="@+id/hourTxt"
-        android:layout_width="38dp"
+        android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
@@ -78,8 +80,9 @@
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
         android:text="Hour"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="10sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ageTxt" />
 
@@ -90,8 +93,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginBottom="4dp"
         android:text="genre"
+        android:textStyle="bold"
         android:textColor="@color/white"
-        android:textSize="10sp"
+        android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/yearTxt"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -102,7 +106,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginBottom="4dp"
         android:text="name"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/genreTxt"

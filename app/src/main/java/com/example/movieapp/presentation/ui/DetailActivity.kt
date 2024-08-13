@@ -13,7 +13,10 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.movieapp.databinding.ActivityDetailBinding
+import com.example.movieapp.domain.model.CastModel
+import com.example.movieapp.domain.model.SliderModel
 import com.example.movieapp.domain.model.TopMoviesModel
+import com.example.movieapp.presentation.adapter.CastListAdapter
 import com.example.movieapp.presentation.adapter.CategoryEachFilmAdapter
 import eightbitlab.com.blurview.RenderScriptBlur
 
@@ -21,6 +24,8 @@ class DetailActivity : BaseActivity() {
 
     private lateinit var binding: ActivityDetailBinding
     private lateinit var topMovie : TopMoviesModel
+    private lateinit var cast : CastModel
+    private lateinit var slider : SliderModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +38,7 @@ class DetailActivity : BaseActivity() {
 
     private fun setVeriable() {
         topMovie = intent.getParcelableExtra("object")!!
+
 
         val requestOptions = RequestOptions().transform(CenterCrop(), GranularRoundedCorners(0f,0f,50f,50f))
         Glide.with(this)
@@ -81,6 +87,10 @@ class DetailActivity : BaseActivity() {
 
         }
 
+        /*if (topMovie.casts.isNotEmpty()) {
+
+            binding.castView.layoutManager = LinearLayoutManager(this@DetailActivity, LinearLayoutManager.HORIZONTAL, false)
+        }*/
 
 
 

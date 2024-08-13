@@ -2,6 +2,7 @@ package com.example.movieapp.domain.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import java.io.Serializable
 
 data class TopMoviesModel (
     var title: String = "",
@@ -12,7 +13,8 @@ data class TopMoviesModel (
     var Imdb: Int = 0,
     var year: Int = 0,
     var genre: ArrayList<String> = ArrayList(),
-):Parcelable{
+    //var casts: ArrayList<String> = ArrayList(),
+):Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString().toString(),
         parcel.readString().toString(),
@@ -22,8 +24,10 @@ data class TopMoviesModel (
         parcel.readInt(),
         parcel.readInt(),
         parcel.createStringArrayList() as ArrayList<String>,
+        //parcel.createStringArrayList() as ArrayList<String>
     ) {
     }
+
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(title)
         parcel.writeString(description)
@@ -33,6 +37,7 @@ data class TopMoviesModel (
         parcel.writeInt(Imdb)
         parcel.writeInt(year)
         parcel.writeStringList(genre)
+       // parcel.writeStringList(casts)
     }
 
     override fun describeContents(): Int {
