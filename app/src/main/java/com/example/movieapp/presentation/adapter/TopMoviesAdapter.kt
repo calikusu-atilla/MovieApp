@@ -11,6 +11,8 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.movieapp.databinding.TopmoviesViewholderBinding
 import com.example.movieapp.domain.model.TopMoviesModel
 import com.example.movieapp.presentation.ui.DetailActivity
+import com.example.movieapp.util.downloadFromUrl
+import com.example.movieapp.util.placeholderProgressBar
 
 class TopMoviesAdapter(val topMovies: List<TopMoviesModel>):RecyclerView.Adapter<TopMoviesAdapter.TopMoviesViewholder>() {
     private var context : android.content.Context? = null
@@ -30,11 +32,14 @@ class TopMoviesAdapter(val topMovies: List<TopMoviesModel>):RecyclerView.Adapter
     override fun onBindViewHolder(holder: TopMoviesViewholder, position: Int) {
         holder.binding.nameTxt.text = topMovies[position].title
 
-        val requestOptions = RequestOptions().transform(CenterCrop(), RoundedCorners(30))
-        Glide.with(holder.itemView.context)
+        //Burada util içerisindeki Glide fonksiyonunda tanımlanan resim yükleme işlemi yapıldı tek bir sınıf yazıldı ve bütün adapterlerde glide ile resim yükleme işlemlerini kısaltmak için yapıldı.
+        holder.binding.pic.downloadFromUrl(topMovies[position].poster, placeholderProgressBar(context!!))
+
+        /* val requestOptions = RequestOptions().transform(CenterCrop(), RoundedCorners(30))
+         Glide.with(holder.itemView.context)
             .load(topMovies[position].poster)
             .apply(requestOptions)
-            .into(holder.binding.pic)
+            .into(holder.binding.pic) */
 
         holder.itemView.setOnClickListener {
             val intent = Intent (holder.itemView.context,DetailActivity::class.java)
