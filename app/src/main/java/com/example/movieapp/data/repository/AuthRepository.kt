@@ -4,30 +4,30 @@ import com.example.movieapp.data.source.FirebaseAuthManager
 import com.example.movieapp.domain.repository.AuthRepositoryInterFace
 import com.google.firebase.auth.FirebaseUser
 
-class AuthRepository(private val firebaseManager:FirebaseAuthManager) : AuthRepositoryInterFace {
-
+class AuthRepository(private val firebaseAuthManager:FirebaseAuthManager) : AuthRepositoryInterFace {
     override fun login(email: String, password: String, callback: (Boolean, String?) -> Unit) {
-        TODO("Not yet implemented")
+        firebaseAuthManager.login(email,password,callback)
     }
 
-    override fun resetPassword(email: String, password: String, callback: (Boolean, String?) -> Unit
-    ) {
-        TODO("Not yet implemented")
+    override fun resetPassword(email: String, callback: (Boolean, String?) -> Unit) {
+        firebaseAuthManager.resetPassword(email,callback)
     }
 
     override fun register(email: String, password: String, callback: (Boolean, String?) -> Unit) {
-        TODO("Not yet implemented")
+        firebaseAuthManager.register(email, password, callback)
     }
 
     override fun getCurrentUser(): FirebaseUser? {
-        TODO("Not yet implemented")
+        return firebaseAuthManager.getCurrentUser()
     }
 
     override fun logout() {
-        TODO("Not yet implemented")
+        firebaseAuthManager.logout()
     }
 
     override fun isUserLoggedIn(): Boolean {
-        TODO("Not yet implemented")
+        return firebaseAuthManager.getCurrentUser() != null
     }
+
+
 }

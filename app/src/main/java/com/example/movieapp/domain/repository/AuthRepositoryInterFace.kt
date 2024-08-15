@@ -16,7 +16,7 @@ interface AuthRepositoryInterFace {
     // Şifre sıfırlama işlemi yapar.
     // 'email' ve 'password' sıfırlama bilgilerini alır.
     // 'callback' bir sonuç döndürür: başarı durumu (Boolean) ve hata mesajı (String?)
-    fun resetPassword (email: String, password: String, callback: (Boolean, String?) -> Unit)
+    fun resetPassword (email: String, callback: (Boolean, String?) -> Unit)
 
     // Kullanıcı kaydı oluşturur.
     // 'email' ve 'password' kayıt bilgilerini alır.
@@ -33,4 +33,6 @@ interface AuthRepositoryInterFace {
     // Kullanıcının giriş yapıp yapmadığını kontrol eder.
     // Boolean döner: kullanıcı giriş yapmış mı (true) veya yapmamış mı (false).
     fun isUserLoggedIn(): Boolean
+
+
 }
