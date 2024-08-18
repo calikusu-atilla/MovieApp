@@ -242,7 +242,7 @@
                     app:srcCompat="@drawable/icon" />
 
                 <ImageView
-                    android:id="@+id/imageView6"
+                    android:id="@+id/Profil"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"

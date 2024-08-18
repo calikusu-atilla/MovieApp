@@ -63,5 +63,11 @@ class LoginActivity : BaseActivity() {
             finish()
         }
 
+        binding.forgetPasswordTxt.setOnClickListener {
+            val intent = Intent(this@LoginActivity,ForgetPasswordActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
     }
 }

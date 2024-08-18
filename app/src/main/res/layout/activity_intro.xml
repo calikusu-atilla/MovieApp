@@ -30,8 +30,8 @@
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="360dp"
-                    android:layout_height="360dp"
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -87,6 +87,7 @@
                 android:layout_width="300dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="64dp"
+                android:layout_gravity="center"
                 android:layout_marginEnd="64dp"
                 android:background="@drawable/background_gradient_2">
 
