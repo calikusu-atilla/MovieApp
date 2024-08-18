@@ -224,7 +224,7 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/imageView5"
+                    android:id="@+id/listBtn"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -233,7 +233,7 @@
                     app:srcCompat="@drawable/icon3png" />
 
                 <ImageView
-                    android:id="@+id/imageView4"
+                    android:id="@+id/imageView5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -242,7 +242,7 @@
                     app:srcCompat="@drawable/icon" />
 
                 <ImageView
-                    android:id="@+id/Profil"
+                    android:id="@+id/profilBtn"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -252,6 +252,7 @@
             </LinearLayout>
         </com.google.android.material.bottomappbar.BottomAppBar>
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/mainBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:maxImageSize="30dp"

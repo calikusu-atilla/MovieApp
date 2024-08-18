@@ -61,7 +61,6 @@ class MainActivity : BaseActivity() {
 
         } else {
             Log.d("MainActivity", "Kullanıcı oturum açmış durumda: ${currentUser.email}")
-            Toast.makeText(this,"Kullanıcı oturum açmış durumda: ${currentUser.email}",Toast.LENGTH_LONG).show()
         }
     }
 
@@ -73,7 +72,8 @@ class MainActivity : BaseActivity() {
     }
 
     private fun bottomNavigation() {
-        binding.Profil.setOnClickListener {  logOutUser() }
+        binding.profilBtn.setOnClickListener { startActivity(Intent(this@MainActivity,ProfilActivity::class.java))}
+        binding.mainBtn.setOnClickListener{ startActivity(Intent(this@MainActivity,MainActivity::class.java))}
     }
 
 
