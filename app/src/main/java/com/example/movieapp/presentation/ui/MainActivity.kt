@@ -43,6 +43,7 @@ class MainActivity : BaseActivity() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         checkCunrentUser()
+        observeAuthState()
         bottomNavigation()
         initBanners()
         initTopMovies()
@@ -62,6 +63,18 @@ class MainActivity : BaseActivity() {
         } else {
             Log.d("MainActivity", "Kullanıcı oturum açmış durumda: ${currentUser.email}")
         }
+    }
+
+    private fun observeAuthState() {
+        authViewModel.authState.observe(this, Observer { isAuthenticated ->
+            if (!isAuthenticated) {
+                // Oturum kapatıldı, LoginActivity'ye yönlendir
+                Log.d("ProfilActivity", "Kullanıcı oturumu kapatıldı.")
+                val intent = Intent(this@MainActivity, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        })
     }
 
     private fun logOutUser(){

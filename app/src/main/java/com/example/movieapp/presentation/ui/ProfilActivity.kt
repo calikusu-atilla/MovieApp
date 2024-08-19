@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.movieapp.data.repository.AuthRepository
 import com.example.movieapp.data.source.FirebaseAuthManager
@@ -64,6 +63,6 @@ class ProfilActivity : BaseActivity() {
     private fun bottomNavigation() {
         binding.profilBtn.setOnClickListener { startActivity(Intent(this@ProfilActivity, ProfilActivity::class.java)) }
         binding.mainBtn.setOnClickListener { startActivity(Intent(this@ProfilActivity, MainActivity::class.java)) }
-        binding.logOutBtn.setOnClickListener { logOutUser() } // Oturumu kapatmak için tıklama işlemi
+        binding.logOutBtn.setOnClickListener { logOutUser() }
     }
 }
