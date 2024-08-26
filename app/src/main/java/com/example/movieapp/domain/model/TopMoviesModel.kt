@@ -7,7 +7,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.example.movieapp.data.local.converters.GenreTypeConverter
-import java.io.Serializable
+
 @Entity(tableName = "top_movies")
 data class TopMoviesModel (
 
@@ -29,6 +29,8 @@ data class TopMoviesModel (
 
     @ColumnInfo (name = "trailer")
     var trailer: String = "",
+
+    @ColumnInfo (name = "imdb")
     var Imdb: Int = 0,
 
     @ColumnInfo (name = "year")
@@ -37,6 +39,7 @@ data class TopMoviesModel (
     @ColumnInfo (name = "genre")
     @TypeConverters(GenreTypeConverter::class)
     var genre: ArrayList<String> = ArrayList(),
+
     //var casts: ArrayList<String> = ArrayList(),
 ):Parcelable {
     constructor(parcel: Parcel) : this(
@@ -48,7 +51,9 @@ data class TopMoviesModel (
         parcel.readString().toString(),
         parcel.readInt(),
         parcel.readInt(),
-        parcel.createStringArrayList() as ArrayList<String>,
+        parcel.createStringArrayList() ?: ArrayList()
+
+        //parcel.createStringArrayList() as ArrayList<String>,
         //parcel.createStringArrayList() as ArrayList<String>
     ) {
 

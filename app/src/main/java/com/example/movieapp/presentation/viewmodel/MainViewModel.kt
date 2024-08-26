@@ -1,19 +1,23 @@
 package com.example.movieapp.presentation.viewmodel
 
 
+import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.movieapp.data.local.dao.TopMoviesDao
+import com.example.movieapp.data.local.database.TopMoviesDatabase
 import com.example.movieapp.domain.model.SliderModel
 import com.example.movieapp.domain.model.TopMoviesModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.launch
 
 
-class MainViewModel: ViewModel() {
+class MainViewModel(application: Application): BaseViewModel(application) {
 
     private val firebaseDatabase = FirebaseDatabase.getInstance()
 
@@ -67,4 +71,20 @@ class MainViewModel: ViewModel() {
         })
 
     }
+
+    private fun storeInSQLite (list : List<TopMoviesModel>) {
+
+        launch {
+            val dao = TopMoviesDatabase(getApplication()).topMoviesDao()
+            dao.getAllTopMovies()
+            val listLong = dao.insertAll(*list.toTypedArray())
+            var i = 0
+            while (i < list.size) {
+                list[i].uuid = listLong[i].toInt()
+                i = i + 1
+            }
+
+        }
+    }
+
 }
