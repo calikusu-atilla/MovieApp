@@ -21,7 +21,7 @@ class TopMoviesRoomRepositoryImpl (private val topMoviesDao: TopMoviesDao) : Top
     override suspend fun deleteTopMovie(topMovieId: Int) {
         topMoviesDao.deleteTopMovie(topMovieId) }
 
-    /* override suspend fun deleteAllTopMovies() {
+    override suspend fun deleteAllTopMovies() {
         return topMoviesDao.deleteAllTopMovie()
-    } */
+    }
 }

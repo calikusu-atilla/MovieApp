@@ -17,8 +17,10 @@ import com.example.movieapp.data.repository.AuthRepository
 import com.example.movieapp.data.source.FirebaseAuthManager
 import com.example.movieapp.databinding.ActivityMainBinding
 import com.example.movieapp.domain.model.SliderModel
+import com.example.movieapp.domain.model.UpcomingMoviesModel
 import com.example.movieapp.presentation.adapter.SliderAdapter
 import com.example.movieapp.presentation.adapter.TopMoviesAdapter
+import com.example.movieapp.presentation.adapter.UpcomingMoviesAdapter
 import com.example.movieapp.presentation.viewmodel.AuthViewModel
 import com.example.movieapp.presentation.viewmodel.AuthViewModelFactory
 import com.example.movieapp.presentation.viewmodel.MainViewModel
@@ -47,6 +49,24 @@ class MainActivity : BaseActivity() {
         bottomNavigation()
         initBanners()
         initTopMovies()
+        initUpcomingMovies()
+
+    }
+
+    private fun initUpcomingMovies() {
+
+        binding.recyclerViewUpcoming.visibility = View.VISIBLE
+
+        viewModel.upcomingMovies.observe(this, Observer { movies ->
+            Log.d("MainActivity", "Upcoming movies count: ${movies.size}")
+            binding.recyclerViewUpcoming.layoutManager = LinearLayoutManager(this@MainActivity,LinearLayoutManager.HORIZONTAL,false)
+            binding.recyclerViewUpcoming.adapter = UpcomingMoviesAdapter(movies)
+            binding.progressBarUpcoming.visibility = View.GONE
+            Log.d("MainActivity", "1")
+        })
+        Log.d("MainActivity", "2")
+        viewModel.loadUpcomingMovies(1)
+
 
     }
 

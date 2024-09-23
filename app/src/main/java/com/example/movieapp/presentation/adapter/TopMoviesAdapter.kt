@@ -30,6 +30,7 @@ class TopMoviesAdapter(val topMovies: List<TopMoviesModel>):RecyclerView.Adapter
     override fun getItemCount(): Int = topMovies.size
 
     override fun onBindViewHolder(holder: TopMoviesViewholder, position: Int) {
+
         holder.binding.nameTxt.text = topMovies[position].title
 
         //Burada util içerisindeki Glide fonksiyonunda tanımlanan resim yükleme işlemi yapıldı tek bir sınıf yazıldı ve bütün adapterlerde glide ile resim yükleme işlemlerini kısaltmak için yapıldı.

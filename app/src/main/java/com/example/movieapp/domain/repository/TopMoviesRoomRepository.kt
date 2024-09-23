@@ -12,5 +12,5 @@ interface TopMoviesRoomRepository {
 
     suspend fun deleteTopMovie(topMovieId: Int)
 
-    //suspend fun deleteAllTopMovies()
+    suspend fun deleteAllTopMovies()
 }

@@ -21,9 +21,9 @@ interface TopMoviesDao {
     @Query ("DELETE  FROM top_movies WHERE uuid = :topMovieId")
     suspend fun  deleteTopMovie(topMovieId: Int)
 
-    /*@Query ("DELETE FROM top_movies")
+    @Query ("DELETE FROM top_movies")
     suspend fun deleteAllTopMovie()
 
-     */
+
 
 }

@@ -3,29 +3,84 @@ package com.example.movieapp.presentation.viewmodel
 
 import android.app.Application
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.movieapp.data.local.dao.TopMoviesDao
 import com.example.movieapp.data.local.database.TopMoviesDatabase
 import com.example.movieapp.domain.model.SliderModel
 import com.example.movieapp.domain.model.TopMoviesModel
+import com.example.movieapp.domain.model.UpcomingMoviesModel
+import com.example.movieapp.domain.repository.MovieRepository
+import com.example.movieapp.domain.repository.UpcomingMoviesRepository
+import com.example.movieapp.util.CustomSharedPreferences
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.sql.Ref
+import javax.inject.Inject
 
-
-class MainViewModel(application: Application): BaseViewModel(application) {
+@HiltViewModel
+class MainViewModel @Inject constructor(application: Application, override val repository: UpcomingMoviesRepository): BaseViewModel(application) {
 
     private val firebaseDatabase = FirebaseDatabase.getInstance()
+    private var customPreferences = CustomSharedPreferences(getApplication())
+    private var refreshTime = 0.1 * 60 * 1000 * 1000 * 1000L
 
     private val _banner = MutableLiveData<List<SliderModel>>()
     val banners : LiveData<List<SliderModel>> = _banner
 
     private val _topMovies = MutableLiveData<List<TopMoviesModel>>()
     val topMovies : LiveData<List<TopMoviesModel>> = _topMovies
+
+    private val _upcomingMovies = MutableLiveData<List<UpcomingMoviesModel>>()
+    val upcomingMovies: LiveData<List<UpcomingMoviesModel>> = _upcomingMovies
+
+
+    fun loadUpcomingMovies(page: Int) {
+        viewModelScope.launch {
+            try {
+                val movies = repository.getUpcomingMovies(2)
+                Log.d("MainViewModel", "Apı referansı alındı: $movies")
+                if (movies != null) {
+                    _upcomingMovies.postValue(movies)
+                } else {
+                    Log.d("MainViewModel", "Film bulunamadı")
+                    // Boş veri durumu yönetimi
+                }
+            } catch (e: Exception) {
+                Log.e("ViewModel", "Error loading movies", e)
+                e.printStackTrace()  // Hatayı daha detaylı olarak loglamak
+            }
+        }
+    }
+
+
+    fun refreshData(){
+
+        val updateTime = customPreferences.getTime()
+        if (updateTime != null && updateTime != 0L && System.nanoTime() - updateTime < refreshTime){
+            getDataFromSQLite()
+        }else {
+            topMovies()
+        }
+
+    }
+
+    private fun getDataFromSQLite() {
+        launch {
+            val topmovies = TopMoviesDatabase(getApplication()).topMoviesDao().getAllTopMovies()
+            _topMovies.postValue(topmovies)
+            Log.d("MainViewModel", "Veriler SQLite'dan alındı.")
+            Toast.makeText(getApplication(),"Sqlite",Toast.LENGTH_LONG).show()
+        }
+    }
+
 
     fun topMovies () {
         val Ref = firebaseDatabase.getReference("TopMovies")
@@ -40,11 +95,12 @@ class MainViewModel(application: Application): BaseViewModel(application) {
                     }
                 }
                 _topMovies.value = lists
+                Toast.makeText(getApplication(),"Fireebase",Toast.LENGTH_LONG).show()
+                storeInSQLite(lists) // Verileri SQLite kaydet
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
+                Log.e("MainViewModel", "Firebase hatası: ${error.message}")            }
         })
     }
 
@@ -66,7 +122,7 @@ class MainViewModel(application: Application): BaseViewModel(application) {
             }
 
             override fun onCancelled(error: DatabaseError) { // veri çekilirken hata oluşursa çağrılır ve hata durumu log.e kaydolur
-                Log.e("MainViewModel", "5. Firebase hatası: ${error.message}")
+                Log.e("MainViewModel", "Firebase hatası: ${error.message}")
             }
         })
 
@@ -76,15 +132,15 @@ class MainViewModel(application: Application): BaseViewModel(application) {
 
         launch {
             val dao = TopMoviesDatabase(getApplication()).topMoviesDao()
-            dao.getAllTopMovies()
+            dao.deleteAllTopMovie()
             val listLong = dao.insertAll(*list.toTypedArray())
             var i = 0
             while (i < list.size) {
                 list[i].uuid = listLong[i].toInt()
                 i = i + 1
             }
-
         }
+        customPreferences.saveTime(System.nanoTime())
     }
 
 }
