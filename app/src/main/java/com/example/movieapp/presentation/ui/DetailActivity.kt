@@ -4,9 +4,12 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewOutlineProvider
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -16,13 +19,17 @@ import com.example.movieapp.databinding.ActivityDetailBinding
 import com.example.movieapp.domain.model.CastModel
 import com.example.movieapp.domain.model.SliderModel
 import com.example.movieapp.domain.model.TopMoviesModel
-import com.example.movieapp.presentation.adapter.CastListAdapter
+import com.example.movieapp.domain.model.UpcomingMovieDetailModel
 import com.example.movieapp.presentation.adapter.CategoryEachFilmAdapter
+import com.example.movieapp.presentation.viewmodel.DetailViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import eightbitlab.com.blurview.RenderScriptBlur
 
+@AndroidEntryPoint
 class DetailActivity : BaseActivity() {
 
     private lateinit var binding: ActivityDetailBinding
+    private lateinit var viewModel: DetailViewModel
     private lateinit var topMovie : TopMoviesModel
     private lateinit var cast : CastModel
     private lateinit var slider : SliderModel
@@ -33,11 +40,89 @@ class DetailActivity : BaseActivity() {
         val view = binding.root
         setContentView(view)
 
-        setVeriable()
+        viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
+
+        topMovieId()
+    }
+
+    private fun topMovieId() {
+        val movieId = intent.getIntExtra("movieId", -1)
+        Log.d("DetailActivity", "Movie ID: $movieId")
+        if (movieId != -1) {
+            val topMovieFromIntent = intent.getParcelableExtra<TopMoviesModel>("object")
+            if (topMovieFromIntent != null) {
+                topMovie = topMovieFromIntent // topMovie'yu burada ayarlıyoruz
+                Log.d("DetailActivity", "TopMovie initialized: $topMovie")
+                setVeriable() // setVeriable burada çağrılmalı
+                showTopMovieDetail(topMovie)
+            } else {
+                getupcomingMovieDetails(movieId)
+            }
+        } else {
+            Log.e("DetailActivity", "Geçersiz movieId")
+        }
+    }
+
+    /*
+    private fun topMovieId() {
+        val movieId = intent.getIntExtra("movieId", -1)
+        if (movieId != -1) {
+            getupcomingMovieDetails(movieId)
+        }
+    } */
+
+    private fun getupcomingMovieDetails(movieId: Int) {
+
+        // ViewModel'den film detaylarını gözlemle
+        viewModel.movieDetails.observe(this, Observer<UpcomingMovieDetailModel?> { movieDetails ->
+            Log.d("DetailActivity", "Upcoming movies details: $movieDetails")
+            movieDetails?.let { showUpcomingMovieDetail(it) }
+        })
+        viewModel.getMovieDetails(movieId)
+
+    }
+
+
+    private fun showUpcomingMovieDetail(details: UpcomingMovieDetailModel){
+        val requestOptions = RequestOptions().transform(CenterCrop(), GranularRoundedCorners(0f, 0f,50f,50f))
+        Glide.with(this)
+            .load(details.poster)
+            .apply(requestOptions)
+            .into(binding.filmPic)
+
+        binding.titleTxt.text = details.title
+        binding.imdbTxt.text = "IMDB " + details.imdb.toString()
+        binding.movieTimesTxt.text = details.year.toString() + " - " + details.time.toString()
+        binding.movieSummery.text = details.description
+
+        /*
+        if (details.genre.isNotEmpty()) {
+
+            binding.genreView.adapter = CategoryEachFilmAdapter(details.genre)
+            binding.genreView.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false )
+        } */
+
+    }
+
+    private fun showTopMovieDetail(topMovie: TopMoviesModel) {
+        val requestOptions = RequestOptions().transform(CenterCrop(), GranularRoundedCorners(0f, 0f, 50f, 50f))
+        Glide.with(this)
+            .load(topMovie.poster)
+            .apply(requestOptions)
+            .into(binding.filmPic)
+
+        binding.titleTxt.text = topMovie.title
+        binding.imdbTxt.text = "IMDB " + topMovie.Imdb.toString()
+        binding.movieTimesTxt.text = topMovie.year.toString() + " - " + topMovie.time.toString()
+        binding.movieSummery.text = topMovie.description
+
     }
 
     private fun setVeriable() {
+        Log.d("DetailActivity", "Setting variables")
+        /*
         topMovie = intent.getParcelableExtra("object")!!
+
 
 
         val requestOptions = RequestOptions().transform(CenterCrop(), GranularRoundedCorners(0f,0f,50f,50f))
@@ -52,6 +137,7 @@ class DetailActivity : BaseActivity() {
         binding.imdbTxt.text = "IMDB " + topMovie.Imdb.toString()
         binding.movieTimesTxt.text = topMovie.year.toString() + " - " + topMovie.time.toString()
         binding.movieSummery.text = topMovie.description
+        */
 
         binding.watchTrailerBtn.setOnClickListener{
 
