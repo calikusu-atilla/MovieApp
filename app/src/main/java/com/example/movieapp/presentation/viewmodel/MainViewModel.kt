@@ -6,14 +6,14 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.movieapp.data.local.dao.TopMoviesDao
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.movieapp.data.local.database.TopMoviesDatabase
 import com.example.movieapp.domain.model.SliderModel
 import com.example.movieapp.domain.model.TopMoviesModel
+import com.example.movieapp.domain.model.TrendingMovieModel
 import com.example.movieapp.domain.model.UpcomingMoviesModel
-import com.example.movieapp.domain.repository.MovieRepository
+import com.example.movieapp.domain.repository.TredingMoviesRepository
 import com.example.movieapp.domain.repository.UpcomingMoviesRepository
 import com.example.movieapp.util.CustomSharedPreferences
 import com.google.firebase.database.DataSnapshot
@@ -22,11 +22,10 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.sql.Ref
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(application: Application, override val repository: UpcomingMoviesRepository): BaseViewModel(application) {
+class MainViewModel @Inject constructor(application: Application, override val upcomingMoviesRepository: UpcomingMoviesRepository, val tredingMoviesRepository: TredingMoviesRepository): BaseViewModel(application) {
 
     private val firebaseDatabase = FirebaseDatabase.getInstance()
     private var customPreferences = CustomSharedPreferences(getApplication())
@@ -41,20 +40,41 @@ class MainViewModel @Inject constructor(application: Application, override val r
     private val _upcomingMovies = MutableLiveData<List<UpcomingMoviesModel>>()
     val upcomingMovies: LiveData<List<UpcomingMoviesModel>> = _upcomingMovies
 
+    private val _tredingMovies = MutableLiveData<List<TrendingMovieModel>>()
+    val tredingMovies: LiveData<List<TrendingMovieModel>> = _tredingMovies
+
+    fun tredingMovies(timeWindow: String){
+        viewModelScope.launch {
+            try {
+                val movies = tredingMoviesRepository.getTredingMovies(timeWindow = "day")
+                Log.d("MainViewModel", "Apı'dan Treding referansı alındı: $movies")
+                if (movies != null ) {
+                    _tredingMovies.postValue(movies)
+                }else{
+                    Log.d("MainViewModel", "Treding Film bulunamadı")
+                }
+
+            }catch (e: Exception){
+                Log.e("ViewModel", "Error loading treding movies", e)
+                e.printStackTrace()  // Hatayı daha detaylı olarak loglamak
+            }
+        }
+
+    }
 
     fun loadUpcomingMovies(page: Int) {
         viewModelScope.launch {
             try {
-                val movies = repository.getUpcomingMovies(1)
-                Log.d("MainViewModel", "Apı referansı alındı: $movies")
+                val movies = upcomingMoviesRepository.getUpcomingMovies(3)
+                Log.d("MainViewModel", "Apı'dan Upcoming referansı alındı: $movies")
                 if (movies != null) {
                     _upcomingMovies.postValue(movies)
                 } else {
-                    Log.d("MainViewModel", "Film bulunamadı")
+                    Log.d("MainViewModel", "Upcoming Film bulunamadı")
                     // Boş veri durumu yönetimi
                 }
             } catch (e: Exception) {
-                Log.e("ViewModel", "Error loading movies", e)
+                Log.e("ViewModel", "Error loading Upcoming movies", e)
                 e.printStackTrace()  // Hatayı daha detaylı olarak loglamak
             }
         }

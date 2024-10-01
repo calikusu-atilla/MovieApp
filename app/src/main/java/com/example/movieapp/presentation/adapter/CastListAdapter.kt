@@ -7,10 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.movieapp.databinding.ViewholderCastBinding
 import com.example.movieapp.domain.model.CastModel
+import com.example.movieapp.domain.model.TmdbApiCastModel
 import com.example.movieapp.domain.model.TopMoviesModel
 
 
-class CastListAdapter(val cast: List<CastModel>) : RecyclerView.Adapter<CastListAdapter.CastListViewholder>() {
+class CastListAdapter(val cast: List<TmdbApiCastModel>) : RecyclerView.Adapter<CastListAdapter.CastListViewholder>() {
 
     private var context : android.content.Context? = null
 

@@ -3,7 +3,6 @@ package com.example.movieapp.presentation.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import com.example.movieapp.domain.repository.MovieRepository
 import com.example.movieapp.domain.repository.UpcomingMoviesRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,7 +18,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
         get() = job + Dispatchers.Main
 
     // Soyut repository özelliği
-    abstract val repository: UpcomingMoviesRepository
+    abstract val upcomingMoviesRepository: UpcomingMoviesRepository
 
     // ViewModel temizlendiğinde job iptal ediliyor
     override fun onCleared() {

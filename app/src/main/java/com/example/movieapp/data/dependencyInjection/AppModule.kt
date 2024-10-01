@@ -2,9 +2,13 @@ package com.example.movieapp.data.dependencyInjection
 
 import com.example.movieapp.data.remote.MovieAPI
 import com.example.movieapp.data.remote.TmdbAPI
+import com.example.movieapp.data.repository.CastMoviesRepositoryImpl
 import com.example.movieapp.data.repository.MovieRepositoryImpl
+import com.example.movieapp.data.repository.TredingMoviesRepositoryImpl
 import com.example.movieapp.data.repository.UpcomingMoviesRepositoryImpl
+import com.example.movieapp.domain.repository.CastMoviesRepository
 import com.example.movieapp.domain.repository.MovieRepository
+import com.example.movieapp.domain.repository.TredingMoviesRepository
 import com.example.movieapp.domain.repository.UpcomingMoviesRepository
 import com.example.movieapp.util.Constants.BASE_URL
 import com.example.movieapp.util.Constants.BASE_URL_TMDB
@@ -53,6 +57,18 @@ object AppModule {
     @Singleton
     fun provideTmdbRepository(api: TmdbAPI): UpcomingMoviesRepository { // Bu örnekte TMDB için başka bir repository sağlıyoruz
         return UpcomingMoviesRepositoryImpl(api = api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTredingRepository(api: TmdbAPI): TredingMoviesRepository {
+        return TredingMoviesRepositoryImpl(api = api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCastRepository(api: TmdbAPI): CastMoviesRepository{
+        return CastMoviesRepositoryImpl(api = api)
     }
 
 }

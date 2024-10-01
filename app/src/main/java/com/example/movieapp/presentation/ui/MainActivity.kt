@@ -19,6 +19,7 @@ import com.example.movieapp.databinding.ActivityMainBinding
 import com.example.movieapp.domain.model.SliderModel
 import com.example.movieapp.presentation.adapter.SliderAdapter
 import com.example.movieapp.presentation.adapter.TopMoviesAdapter
+import com.example.movieapp.presentation.adapter.TredingMoviesAdapter
 import com.example.movieapp.presentation.adapter.UpcomingMoviesAdapter
 import com.example.movieapp.presentation.viewmodel.AuthViewModel
 import com.example.movieapp.presentation.viewmodel.AuthViewModelFactory
@@ -49,7 +50,21 @@ class MainActivity : BaseActivity() {
         initBanners()
         initTopMovies()
         initUpcomingMovies()
+        initTredingMovies()
 
+    }
+
+    private fun initTredingMovies() {
+        binding.recyclerViewTreding.visibility = View.VISIBLE
+
+        viewModel.tredingMovies.observe(this, Observer { tredingMovies ->
+            Log.d("MainActivity", "Treding movies count: ${tredingMovies.size}")
+            binding.recyclerViewTreding.layoutManager = LinearLayoutManager(this@MainActivity,LinearLayoutManager.HORIZONTAL,false)
+            binding.recyclerViewTreding.adapter = TredingMoviesAdapter(tredingMovies)
+            binding.progressBarTreding.visibility = View.GONE
+
+        })
+        viewModel.tredingMovies("day")
     }
 
     private fun initUpcomingMovies() {
@@ -65,7 +80,7 @@ class MainActivity : BaseActivity() {
             Log.d("MainActivity", "1")
         })
         Log.d("MainActivity", "2")
-        viewModel.loadUpcomingMovies(1)
+        viewModel.loadUpcomingMovies(2)
 
 
     }

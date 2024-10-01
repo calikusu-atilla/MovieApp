@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailViewModel @Inject constructor(application: Application, override val repository: UpcomingMoviesRepository): BaseViewModel(application){
+class DetailViewModel @Inject constructor(application: Application, override val upcomingMoviesRepository: UpcomingMoviesRepository): BaseViewModel(application){
 
     private val _movieVideo = MutableLiveData<MovieTmdbApıVideosModel?>()
     val movieVideo: MutableLiveData<MovieTmdbApıVideosModel?> = _movieVideo
@@ -21,10 +21,11 @@ class DetailViewModel @Inject constructor(application: Application, override val
     private val _movieDetails = MutableLiveData<UpcomingMovieDetailModel>()
     val movieDetails: LiveData<UpcomingMovieDetailModel>  = _movieDetails
 
+
     fun getMoviesVideos(movieId: Int){
         viewModelScope.launch {
             try {
-                val videos = repository.getMoviesVideos(movieId)
+                val videos = upcomingMoviesRepository.getMoviesVideos(movieId)
                 if (videos != null) {
                     _movieVideo.postValue(videos)
                 }else {
@@ -42,7 +43,7 @@ class DetailViewModel @Inject constructor(application: Application, override val
     fun getMovieDetails(movieId : Int){
         viewModelScope.launch {
             try {
-                val details = repository.getUpcomingMoviesDetails(movieId)
+                val details = upcomingMoviesRepository.getUpcomingMoviesDetails(movieId)
                 Log.d("DetailViewModel", "Apı referansı alındı: $details")
                 if (details != null) {
                     _movieDetails.postValue(details)

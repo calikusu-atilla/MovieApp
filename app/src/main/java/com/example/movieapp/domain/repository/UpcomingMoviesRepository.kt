@@ -13,5 +13,9 @@ interface UpcomingMoviesRepository {
     // Film ID ile film detaylarını döndürür
     suspend fun getUpcomingMoviesDetails(movieId: Int): UpcomingMovieDetailModel
 
+    // Film Id ile Film fragmanını döndürür
     suspend fun getMoviesVideos(movieId: Int): MovieTmdbApıVideosModel
+
+
+
 }

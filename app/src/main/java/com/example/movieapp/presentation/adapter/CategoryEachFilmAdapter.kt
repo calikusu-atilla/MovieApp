@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.databinding.ViewholderCategoryBinding
 
-class CategoryEachFilmAdapter(val topMovies: ArrayList<String>) : RecyclerView.Adapter<CategoryEachFilmAdapter.CategoryEachFilmViewholder>() {
+class CategoryEachFilmAdapter(val topMovies: List<String>) : RecyclerView.Adapter<CategoryEachFilmAdapter.CategoryEachFilmViewholder>() {
     private var context : android.content.Context? = null
 
     class CategoryEachFilmViewholder(val binding : ViewholderCategoryBinding):RecyclerView.ViewHolder(binding.root){

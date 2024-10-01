@@ -21,11 +21,8 @@ import com.example.movieapp.domain.model.MovieTmdbApıVideosModel
 import com.example.movieapp.domain.model.SliderModel
 import com.example.movieapp.domain.model.TopMoviesModel
 import com.example.movieapp.domain.model.UpcomingMovieDetailModel
-import com.example.movieapp.domain.model.VideoModel
 import com.example.movieapp.presentation.adapter.CategoryEachFilmAdapter
 import com.example.movieapp.presentation.viewmodel.DetailViewModel
-import com.example.movieapp.util.downloadFromUrl
-import com.example.movieapp.util.placeholderProgressBar
 import dagger.hilt.android.AndroidEntryPoint
 import eightbitlab.com.blurview.RenderScriptBlur
 
@@ -53,6 +50,11 @@ class DetailActivity : BaseActivity() {
         }
 
     }
+
+    private fun castMovıeId() {
+
+    }
+
     private fun topMovieId() {
         val movieId = intent.getIntExtra("movieId", -1)
         Log.d("DetailActivity", "API Movie ID: $movieId")
@@ -101,6 +103,18 @@ class DetailActivity : BaseActivity() {
         binding.movieTimesTxt.text = details.year.toString() + " - " + details.time.toString()
         binding.movieSummery.text = details.description
 
+        if (details.genre != null){
+            binding.genreView.adapter = CategoryEachFilmAdapter(details.genre)
+            binding.genreView.layoutManager = LinearLayoutManager(this@DetailActivity,LinearLayoutManager.HORIZONTAL,false)
+
+        }
+
+        /*if (details.cast.isNotEmpty()) {
+
+            binding.castView.layoutManager = LinearLayoutManager(this@DetailActivity, LinearLayoutManager.HORIZONTAL, false)
+        }*/
+
+
         setupBlurView()
 
         binding.watchTrailerBtn.setOnClickListener{
@@ -121,12 +135,6 @@ class DetailActivity : BaseActivity() {
         setupBlurView()
 
 
-        /*
-        if (details.genre.isNotEmpty()) {
-
-            binding.genreView.adapter = CategoryEachFilmAdapter(details.genre)
-            binding.genreView.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false )
-        } */
 
     }
 
@@ -137,7 +145,6 @@ class DetailActivity : BaseActivity() {
         Log.d("DetailActivity", "Firebase Movie ID: $topMovie")
 
 
-
         val requestOptions = RequestOptions().transform(CenterCrop(), GranularRoundedCorners(0f,0f,50f,50f))
         Glide.with(this)
             .load(topMovie.poster)
@@ -145,11 +152,16 @@ class DetailActivity : BaseActivity() {
             .into(binding.filmPic)
 
 
-
         binding.titleTxt.text = topMovie.title
         binding.imdbTxt.text = "IMDB " + topMovie.Imdb.toString()
         binding.movieTimesTxt.text = topMovie.year.toString() + " - " + topMovie.time.toString()
         binding.movieSummery.text = topMovie.description
+
+        if (topMovie.genre != null){
+            binding.genreView.adapter = CategoryEachFilmAdapter(topMovie.genre)
+            binding.genreView.layoutManager = LinearLayoutManager(this@DetailActivity,LinearLayoutManager.HORIZONTAL,false)
+
+        }
 
 
         binding.watchTrailerBtn.setOnClickListener{
@@ -169,11 +181,7 @@ class DetailActivity : BaseActivity() {
 
         setupBlurView()
 
-        if (topMovie.genre != null){
-            binding.genreView.adapter = CategoryEachFilmAdapter(topMovie.genre)
-            binding.genreView.layoutManager = LinearLayoutManager(this@DetailActivity,LinearLayoutManager.HORIZONTAL,false)
 
-        }
 
         /*if (topMovie.casts.isNotEmpty()) {
 
