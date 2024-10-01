@@ -17,11 +17,15 @@ import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.movieapp.databinding.ActivityDetailBinding
 import com.example.movieapp.domain.model.CastModel
+import com.example.movieapp.domain.model.MovieTmdbApıVideosModel
 import com.example.movieapp.domain.model.SliderModel
 import com.example.movieapp.domain.model.TopMoviesModel
 import com.example.movieapp.domain.model.UpcomingMovieDetailModel
+import com.example.movieapp.domain.model.VideoModel
 import com.example.movieapp.presentation.adapter.CategoryEachFilmAdapter
 import com.example.movieapp.presentation.viewmodel.DetailViewModel
+import com.example.movieapp.util.downloadFromUrl
+import com.example.movieapp.util.placeholderProgressBar
 import dagger.hilt.android.AndroidEntryPoint
 import eightbitlab.com.blurview.RenderScriptBlur
 
@@ -42,34 +46,24 @@ class DetailActivity : BaseActivity() {
 
         viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
 
-        topMovieId()
-    }
+        if (intent.hasExtra("object")) { // Eğer "object" yoksa, upcoming movie detayını al
+            setVeriable()
+        } else {
+            topMovieId()
+        }
 
+    }
     private fun topMovieId() {
         val movieId = intent.getIntExtra("movieId", -1)
-        Log.d("DetailActivity", "Movie ID: $movieId")
+        Log.d("DetailActivity", "API Movie ID: $movieId")
+
         if (movieId != -1) {
-            val topMovieFromIntent = intent.getParcelableExtra<TopMoviesModel>("object")
-            if (topMovieFromIntent != null) {
-                topMovie = topMovieFromIntent // topMovie'yu burada ayarlıyoruz
-                Log.d("DetailActivity", "TopMovie initialized: $topMovie")
-                setVeriable() // setVeriable burada çağrılmalı
-                showTopMovieDetail(topMovie)
-            } else {
-                getupcomingMovieDetails(movieId)
-            }
+            getupcomingMovieDetails(movieId)
         } else {
             Log.e("DetailActivity", "Geçersiz movieId")
         }
     }
 
-    /*
-    private fun topMovieId() {
-        val movieId = intent.getIntExtra("movieId", -1)
-        if (movieId != -1) {
-            getupcomingMovieDetails(movieId)
-        }
-    } */
 
     private fun getupcomingMovieDetails(movieId: Int) {
 
@@ -80,20 +74,52 @@ class DetailActivity : BaseActivity() {
         })
         viewModel.getMovieDetails(movieId)
 
+        viewModel.movieVideo.observe(this, Observer<MovieTmdbApıVideosModel?> { videos ->
+            videos?.let{
+                // Kullanıcı arayüzünü video verileriyle güncelle
+                Log.d("DetailActivity", "Fetched videos: $videos")
+                // Burada kullanıcı arayüzünü güncelleyebilirsiniz
+               // updateVideoUI(it.videos) // it.videos'ın VideoModel listesi olduğunu varsayıyoruz
+            }
+        })
+        viewModel.getMovieDetails(movieId)
+
     }
 
 
     private fun showUpcomingMovieDetail(details: UpcomingMovieDetailModel){
+
         val requestOptions = RequestOptions().transform(CenterCrop(), GranularRoundedCorners(0f, 0f,50f,50f))
         Glide.with(this)
-            .load(details.poster)
+            .load("https://image.tmdb.org/t/p/w500${details.poster}")
             .apply(requestOptions)
             .into(binding.filmPic)
 
+
         binding.titleTxt.text = details.title
-        binding.imdbTxt.text = "IMDB " + details.imdb.toString()
+        binding.imdbTxt.text = "IMDB " + details.imdb
         binding.movieTimesTxt.text = details.year.toString() + " - " + details.time.toString()
         binding.movieSummery.text = details.description
+
+        setupBlurView()
+
+        binding.watchTrailerBtn.setOnClickListener{
+
+            val id = details.trailer.replace("https://www.youtube.com/watch?v=", "")
+            val appIntent = Intent (Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + id))
+            val webIntent = Intent (Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=" + id))
+
+            try {
+                startActivity(appIntent)
+            }catch (ex: ActivityNotFoundException) {
+                startActivity(webIntent)
+            }
+        }
+
+        binding.backBtn.setOnClickListener { finish() }
+
+        setupBlurView()
+
 
         /*
         if (details.genre.isNotEmpty()) {
@@ -104,24 +130,11 @@ class DetailActivity : BaseActivity() {
 
     }
 
-    private fun showTopMovieDetail(topMovie: TopMoviesModel) {
-        val requestOptions = RequestOptions().transform(CenterCrop(), GranularRoundedCorners(0f, 0f, 50f, 50f))
-        Glide.with(this)
-            .load(topMovie.poster)
-            .apply(requestOptions)
-            .into(binding.filmPic)
-
-        binding.titleTxt.text = topMovie.title
-        binding.imdbTxt.text = "IMDB " + topMovie.Imdb.toString()
-        binding.movieTimesTxt.text = topMovie.year.toString() + " - " + topMovie.time.toString()
-        binding.movieSummery.text = topMovie.description
-
-    }
-
     private fun setVeriable() {
-        Log.d("DetailActivity", "Setting variables")
-        /*
+
         topMovie = intent.getParcelableExtra("object")!!
+
+        Log.d("DetailActivity", "Firebase Movie ID: $topMovie")
 
 
 
@@ -137,7 +150,7 @@ class DetailActivity : BaseActivity() {
         binding.imdbTxt.text = "IMDB " + topMovie.Imdb.toString()
         binding.movieTimesTxt.text = topMovie.year.toString() + " - " + topMovie.time.toString()
         binding.movieSummery.text = topMovie.description
-        */
+
 
         binding.watchTrailerBtn.setOnClickListener{
 
@@ -154,18 +167,7 @@ class DetailActivity : BaseActivity() {
 
         binding.backBtn.setOnClickListener { finish() }
 
-        val radius = 10f
-
-        val decorView: View = window.decorView
-        val rootView = decorView.findViewById<ViewGroup>(android.R.id.content)
-        val  windowsBackground = decorView.background
-
-        binding.blurView.setupWith(rootView,RenderScriptBlur(this))
-            .setFrameClearDrawable(windowsBackground)
-            .setBlurRadius(radius)
-
-        binding.blurView.setOutlineProvider(ViewOutlineProvider.BACKGROUND)
-        binding.blurView.clipToOutline = true
+        setupBlurView()
 
         if (topMovie.genre != null){
             binding.genreView.adapter = CategoryEachFilmAdapter(topMovie.genre)
@@ -181,4 +183,21 @@ class DetailActivity : BaseActivity() {
 
 
     }
+
+
+    private fun setupBlurView() {
+        val radius = 10f
+        val decorView: View = window.decorView
+        val rootView = decorView.findViewById<ViewGroup>(android.R.id.content)
+        val windowsBackground = decorView.background
+
+        binding.blurView.setupWith(rootView,RenderScriptBlur(this))
+            .setFrameClearDrawable(windowsBackground)
+            .setBlurRadius(radius)
+
+        binding.blurView.setOutlineProvider(ViewOutlineProvider.BACKGROUND)
+        binding.blurView.clipToOutline = true
+
+    }
+
 }

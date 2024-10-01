@@ -44,7 +44,7 @@ class TopMoviesAdapter(val topMovies: List<TopMoviesModel>):RecyclerView.Adapter
 
         holder.itemView.setOnClickListener {
             val intent = Intent (holder.itemView.context,DetailActivity::class.java)
-            intent.putExtra("object",topMovies[position].uuid)
+            intent.putExtra("object",topMovies[position])
             holder.itemView.context.startActivity(intent)
         }
 

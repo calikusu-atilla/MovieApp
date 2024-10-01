@@ -2,10 +2,12 @@ package com.example.movieapp.data.repository
 
 
 import com.example.movieapp.data.remote.TmdbAPI
+import com.example.movieapp.data.remote.dto.toModel
 import com.example.movieapp.data.remote.dto.toUpcomingMoviesList
 import com.example.movieapp.domain.model.UpcomingMoviesModel
 import com.example.movieapp.domain.repository.UpcomingMoviesRepository
 import com.example.movieapp.data.remote.dto.toUpcomingMovieDetailModel
+import com.example.movieapp.domain.model.MovieTmdbApıVideosModel
 import com.example.movieapp.domain.model.UpcomingMovieDetailModel
 import javax.inject.Inject
 
@@ -24,6 +26,11 @@ class UpcomingMoviesRepositoryImpl @Inject constructor(private val api: TmdbAPI)
     override suspend fun getUpcomingMoviesDetails(movieId: Int): UpcomingMovieDetailModel {
         val response = api.getUpcomingMoviesDetails(movieId = movieId)
         return response.toUpcomingMovieDetailModel()
+    }
+
+    override suspend fun getMoviesVideos(movieId: Int): MovieTmdbApıVideosModel {
+        val response = api.getMovieVideos(movieId = movieId)
+        return response.toModel()
     }
 
 
