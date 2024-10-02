@@ -19,8 +19,10 @@ import com.example.movieapp.databinding.ActivityDetailBinding
 import com.example.movieapp.domain.model.CastModel
 import com.example.movieapp.domain.model.MovieTmdbApıVideosModel
 import com.example.movieapp.domain.model.SliderModel
+import com.example.movieapp.domain.model.TmdbApiCastModel
 import com.example.movieapp.domain.model.TopMoviesModel
 import com.example.movieapp.domain.model.UpcomingMovieDetailModel
+import com.example.movieapp.presentation.adapter.CastListAdapter
 import com.example.movieapp.presentation.adapter.CategoryEachFilmAdapter
 import com.example.movieapp.presentation.viewmodel.DetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,7 +45,7 @@ class DetailActivity : BaseActivity() {
 
         viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
 
-        if (intent.hasExtra("object")) { // Eğer "object" yoksa, upcoming movie detayını al
+        if (intent.hasExtra("object")) { // Eğer "object" varsa, setVeriable() çağrılır, yoksa upcoming movie detayını al
             setVeriable()
         } else {
             topMovieId()
@@ -51,9 +53,6 @@ class DetailActivity : BaseActivity() {
 
     }
 
-    private fun castMovıeId() {
-
-    }
 
     private fun topMovieId() {
         val movieId = intent.getIntExtra("movieId", -1)
@@ -86,6 +85,27 @@ class DetailActivity : BaseActivity() {
         })
         viewModel.getMovieDetails(movieId)
 
+
+    }
+
+    private fun castMovıeId(movieId: Int) {
+
+        viewModel.castMovies.observe(this, Observer { cast ->
+            Log.d("DetailActivity", "Cast : $cast")
+            cast?.let { showCastList(it) }
+        })
+        viewModel.getCastMovies(movieId)
+
+
+    }
+
+    private fun showCastList(castList: List<TmdbApiCastModel?>) {
+        if (castList.isNotEmpty()) {
+            val adapter = CastListAdapter(castList)
+            binding.castView.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
+            binding.castView.adapter = adapter
+        }
+
     }
 
 
@@ -108,11 +128,7 @@ class DetailActivity : BaseActivity() {
             binding.genreView.layoutManager = LinearLayoutManager(this@DetailActivity,LinearLayoutManager.HORIZONTAL,false)
 
         }
-
-        /*if (details.cast.isNotEmpty()) {
-
-            binding.castView.layoutManager = LinearLayoutManager(this@DetailActivity, LinearLayoutManager.HORIZONTAL, false)
-        }*/
+        castMovıeId(movieId = details.uuid)
 
 
         setupBlurView()
@@ -133,8 +149,6 @@ class DetailActivity : BaseActivity() {
         binding.backBtn.setOnClickListener { finish() }
 
         setupBlurView()
-
-
 
     }
 
@@ -180,15 +194,6 @@ class DetailActivity : BaseActivity() {
         binding.backBtn.setOnClickListener { finish() }
 
         setupBlurView()
-
-
-
-        /*if (topMovie.casts.isNotEmpty()) {
-
-            binding.castView.layoutManager = LinearLayoutManager(this@DetailActivity, LinearLayoutManager.HORIZONTAL, false)
-        }*/
-
-
 
     }
 

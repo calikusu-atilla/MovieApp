@@ -6,14 +6,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.movieapp.domain.model.MovieTmdbApıVideosModel
+import com.example.movieapp.domain.model.TmdbApiCastModel
 import com.example.movieapp.domain.model.UpcomingMovieDetailModel
+import com.example.movieapp.domain.repository.CastMoviesRepository
 import com.example.movieapp.domain.repository.UpcomingMoviesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailViewModel @Inject constructor(application: Application, override val upcomingMoviesRepository: UpcomingMoviesRepository): BaseViewModel(application){
+class DetailViewModel @Inject constructor(application: Application, override val upcomingMoviesRepository: UpcomingMoviesRepository,  val castMoviesRepository: CastMoviesRepository): BaseViewModel(application){
 
     private val _movieVideo = MutableLiveData<MovieTmdbApıVideosModel?>()
     val movieVideo: MutableLiveData<MovieTmdbApıVideosModel?> = _movieVideo
@@ -21,6 +23,26 @@ class DetailViewModel @Inject constructor(application: Application, override val
     private val _movieDetails = MutableLiveData<UpcomingMovieDetailModel>()
     val movieDetails: LiveData<UpcomingMovieDetailModel>  = _movieDetails
 
+    private val _castMovies = MutableLiveData<List<TmdbApiCastModel?>>()
+    val castMovies : LiveData<List<TmdbApiCastModel?>> = _castMovies
+
+
+    fun getCastMovies(movieId: Int){
+        viewModelScope.launch {
+            try {
+                val cast = castMoviesRepository.getCastMovies(movieId)
+                if (cast.isNotEmpty())  {
+                    _castMovies.postValue(cast)
+                }else {
+                    Log.d("DetailViewModel", "Cast bulunamadı")
+                }
+
+            }catch (e: Exception){
+                Log.e("DetailViewModel", "Error loading cast", e)
+                e.printStackTrace()
+            }
+        }
+    }
 
     fun getMoviesVideos(movieId: Int){
         viewModelScope.launch {

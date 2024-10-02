@@ -30,7 +30,7 @@ class SliderAdapter(
 
 
         fun setImage(sliderItems: SliderModel, context: Context) { //Slider öğesinin görüntüsünü ayarlayan yöntem
-            val requestOptions = RequestOptions().transform(CenterCrop(), RoundedCorners(50))  // Glide için görüntü yükleme ve görüntüyü ortalayarak boyutlandırma  ve köşe yuvarlama ekleniyor seçenekleri oluşturuluyor
+            val requestOptions = RequestOptions().transform(CenterCrop(), RoundedCorners(80))  // Glide için görüntü yükleme ve görüntüyü ortalayarak boyutlandırma  ve köşe yuvarlama ekleniyor seçenekleri oluşturuluyor
             Glide.with(context)   // Glide kütüphanesi kullanılarak context üzerinden görüntü yükleniyor
                 .load(sliderItems.image)    // SliderModel içindeki image kullanılarak görüntü yükleniyor
                 .apply(requestOptions)    // Yükleme seçenekleri uygulanıyor
