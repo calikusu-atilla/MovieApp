@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
+import com.example.movieapp.R
 import com.example.movieapp.databinding.ViewholderCastBinding
 import com.example.movieapp.domain.model.TmdbApiCastModel
 
@@ -14,6 +15,7 @@ import com.example.movieapp.domain.model.TmdbApiCastModel
 class CastListAdapter(val cast: List<TmdbApiCastModel?>) : RecyclerView.Adapter<CastListAdapter.CastListViewholder>() {
 
     private var context: android.content.Context? = null
+    private val filteredCast: List<TmdbApiCastModel> = cast.filterNotNull().filter { !it.PicUrl.isNullOrEmpty() }
 
     class CastListViewholder(val binding: ViewholderCastBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -26,20 +28,18 @@ class CastListAdapter(val cast: List<TmdbApiCastModel?>) : RecyclerView.Adapter<
         return CastListViewholder(binding)
     }
 
-    override fun getItemCount(): Int = cast.size
+    override fun getItemCount(): Int = filteredCast.size
 
     override fun onBindViewHolder(holder: CastListViewholder, position: Int) {
 
-        val currentCast = cast[position]
+        val currentCast = filteredCast[position]
 
-        currentCast?.let { // Null kontrolü
-            val requestOptions = RequestOptions().transform(CenterCrop())
+        val requestOptions = RequestOptions().transform(CenterCrop())
             Glide.with(context!!)
-                .load("https://image.tmdb.org/t/p/w500${it.PicUrl}")
+                .load("https://image.tmdb.org/t/p/w500${currentCast.PicUrl}")
                 .apply(requestOptions)
                 .into(holder.binding.pic)
 
-            holder.binding.nameTxt.text = it.Aktor
+            holder.binding.nameTxt.text = currentCast.Aktor ?: "Unknown"
         }
     }
-}

@@ -11,7 +11,7 @@ data class CastMoviesDto(
 fun Cast.toCastModel(): TmdbApiCastModel {
     return TmdbApiCastModel(
         id = this.id,
-        PicUrl = this.profile_path,   //?.let { "https://image.tmdb.org/t/p/w500$it" }, // Resim URL'sini oluştur
+        PicUrl = this.profile_path ?: "",
         Aktor = this.name
     )
 }

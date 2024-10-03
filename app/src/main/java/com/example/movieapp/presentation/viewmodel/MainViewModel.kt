@@ -65,7 +65,7 @@ class MainViewModel @Inject constructor(application: Application, override val u
     fun loadUpcomingMovies(page: Int) {
         viewModelScope.launch {
             try {
-                val movies = upcomingMoviesRepository.getUpcomingMovies(3)
+                val movies = upcomingMoviesRepository.getUpcomingMovies(1)
                 Log.d("MainViewModel", "Apı'dan Upcoming referansı alındı: $movies")
                 if (movies != null) {
                     _upcomingMovies.postValue(movies)
