@@ -16,6 +16,21 @@
         android:theme="@style/Theme.MovieApp"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.ui.SnackAndTicketActivityActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.ui.SnackAndTicketActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="false"
+            android:label="@string/title_activity_snack_and_ticket"
+            android:theme="@style/Theme.MovieApp.Fullscreen" />
+        <activity
+            android:name=".presentation.ui.SeatListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.ui.CineverseActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.viewmodel.DetailViewModel"
             android:exported="false" />
         <activity

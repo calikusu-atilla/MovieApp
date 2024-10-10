@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
-import com.example.movieapp.R
 import com.example.movieapp.databinding.ViewholderCastBinding
 import com.example.movieapp.domain.model.TmdbApiCastModel
 

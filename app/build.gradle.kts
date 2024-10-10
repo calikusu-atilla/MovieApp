@@ -122,4 +122,7 @@ dependencies {
     //BlurView
     implementation (libs.blurview)
 
+    //Palette
+    implementation ("androidx.palette:palette-ktx:1.0.0")
+
 }

@@ -122,6 +122,7 @@ class MainActivity : BaseActivity() {
     private fun bottomNavigation() {
         binding.profilBtn.setOnClickListener { startActivity(Intent(this@MainActivity,ProfilActivity::class.java))}
         binding.mainBtn.setOnClickListener{ startActivity(Intent(this@MainActivity,MainActivity::class.java))}
+        binding.cineverseBtn.setOnClickListener { startActivity(Intent(this@MainActivity,CineverseActivity::class.java)) }
     }
 
 

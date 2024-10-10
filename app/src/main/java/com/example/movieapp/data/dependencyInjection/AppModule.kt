@@ -12,6 +12,7 @@ import com.example.movieapp.domain.repository.TredingMoviesRepository
 import com.example.movieapp.domain.repository.UpcomingMoviesRepository
 import com.example.movieapp.util.Constants.BASE_URL
 import com.example.movieapp.util.Constants.BASE_URL_TMDB
+import com.google.firebase.database.FirebaseDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,6 +24,13 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class) // Bu modül, SingletonComponent içerisine enjekte edilecek şekilde yapılandırılmıştır.
 object AppModule {
+
+    // Uygulama genelinde tek bir FirebaseDatabase örneğini sağlar.
+    @Provides
+    @Singleton
+    fun provideFirebaseDatabese(): FirebaseDatabase {
+        return FirebaseDatabase.getInstance()
+    }
 
 
     // Retrofit kullanarak MovieAPI örneği sağlayan fonksiyon.

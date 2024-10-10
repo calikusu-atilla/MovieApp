@@ -44,15 +44,6 @@ class UpcomingMoviesAdapter(val upcomingMovies: List<UpcomingMoviesModel>):Recyc
             holder.itemView.context.startActivity(intent)
         }
 
-
-        /*
-        holder.itemView.setOnClickListener {
-            val intent = Intent (holder.itemView.context, DetailActivity::class.java)
-            intent.putExtra("movieId",upcomingMovies[position])
-            holder.itemView.context.startActivity(intent)
-        }
-        */
-
     }
 
     override fun getItemCount(): Int = upcomingMovies.size

@@ -11,7 +11,7 @@ data class UpcomingMovieDetailModel(
     var poster: String,
     var time: String,
     var trailer: String,
-    var imdb: String,
+    var popularity: String,
     var year: Int,
     var genre: List<String>,
 ):Parcelable{
@@ -35,7 +35,7 @@ data class UpcomingMovieDetailModel(
         parcel.writeString(poster)
         parcel.writeString(time)
         parcel.writeString(trailer)
-        parcel.writeString(imdb)
+        parcel.writeString(popularity)
         parcel.writeInt(year)
         parcel.writeStringList(genre)
     }

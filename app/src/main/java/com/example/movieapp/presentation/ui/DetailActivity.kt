@@ -50,9 +50,7 @@ class DetailActivity : BaseActivity() {
         } else {
             topMovieId()
         }
-
     }
-
 
     private fun topMovieId() {
         val movieId = intent.getIntExtra("movieId", -1)
@@ -64,7 +62,6 @@ class DetailActivity : BaseActivity() {
             Log.e("DetailActivity", "Geçersiz movieId")
         }
     }
-
 
     private fun getupcomingMovieDetails(movieId: Int) {
 
@@ -84,8 +81,6 @@ class DetailActivity : BaseActivity() {
             }
         })
         viewModel.getMovieDetails(movieId)
-
-
     }
 
     private fun castMovıeId(movieId: Int) {
@@ -95,8 +90,6 @@ class DetailActivity : BaseActivity() {
             cast?.let { showCastList(it) }
         })
         viewModel.getCastMovies(movieId)
-
-
     }
 
     private fun showCastList(castList: List<TmdbApiCastModel?>) {
@@ -108,7 +101,6 @@ class DetailActivity : BaseActivity() {
 
     }
 
-
     private fun showUpcomingMovieDetail(details: UpcomingMovieDetailModel){
 
         val requestOptions = RequestOptions().transform(CenterCrop(), GranularRoundedCorners(0f, 0f,50f,50f))
@@ -117,9 +109,8 @@ class DetailActivity : BaseActivity() {
             .apply(requestOptions)
             .into(binding.filmPic)
 
-
         binding.titleTxt.text = details.title
-        binding.imdbTxt.text = "IMDB " + details.imdb
+        binding.imdbTxt.text = "IMDB " + details.popularity
         binding.movieTimesTxt.text = details.year.toString() + " - " + details.time.toString()
         binding.movieSummery.text = details.description
 
@@ -129,7 +120,6 @@ class DetailActivity : BaseActivity() {
 
         }
         castMovıeId(movieId = details.uuid)
-
 
         setupBlurView()
 
@@ -158,13 +148,11 @@ class DetailActivity : BaseActivity() {
 
         Log.d("DetailActivity", "Firebase Movie ID: $topMovie")
 
-
         val requestOptions = RequestOptions().transform(CenterCrop(), GranularRoundedCorners(0f,0f,50f,50f))
         Glide.with(this)
             .load(topMovie.poster)
             .apply(requestOptions)
             .into(binding.filmPic)
-
 
         binding.titleTxt.text = topMovie.title
         binding.imdbTxt.text = "IMDB " + topMovie.Imdb.toString()
@@ -176,7 +164,6 @@ class DetailActivity : BaseActivity() {
             binding.genreView.layoutManager = LinearLayoutManager(this@DetailActivity,LinearLayoutManager.HORIZONTAL,false)
 
         }
-
 
         binding.watchTrailerBtn.setOnClickListener{
 
@@ -194,9 +181,7 @@ class DetailActivity : BaseActivity() {
         binding.backBtn.setOnClickListener { finish() }
 
         setupBlurView()
-
     }
-
 
     private fun setupBlurView() {
         val radius = 10f

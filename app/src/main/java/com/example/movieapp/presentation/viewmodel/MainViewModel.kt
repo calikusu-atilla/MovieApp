@@ -46,7 +46,7 @@ class MainViewModel @Inject constructor(application: Application, override val u
     fun tredingMovies(timeWindow: String){
         viewModelScope.launch {
             try {
-                val movies = tredingMoviesRepository.getTredingMovies(timeWindow = "day")
+                val movies = tredingMoviesRepository.getTredingMovies(timeWindow = "week")
                 Log.d("MainViewModel", "Apı'dan Treding referansı alındı: $movies")
                 if (movies != null ) {
                     _tredingMovies.postValue(movies)
@@ -65,7 +65,7 @@ class MainViewModel @Inject constructor(application: Application, override val u
     fun loadUpcomingMovies(page: Int) {
         viewModelScope.launch {
             try {
-                val movies = upcomingMoviesRepository.getUpcomingMovies(1)
+                val movies = upcomingMoviesRepository.getUpcomingMovies(2)
                 Log.d("MainViewModel", "Apı'dan Upcoming referansı alındı: $movies")
                 if (movies != null) {
                     _upcomingMovies.postValue(movies)

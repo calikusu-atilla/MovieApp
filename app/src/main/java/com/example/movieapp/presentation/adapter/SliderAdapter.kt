@@ -2,6 +2,7 @@ package com.example.movieapp.presentation.adapter
 
 import android.content.Context
 import android.content.Intent
+
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.movieapp.databinding.SliderViewholderBinding
 import com.example.movieapp.domain.model.SliderModel
 import com.example.movieapp.presentation.ui.DetailActivity
+
 
 class SliderAdapter(
 
@@ -41,7 +43,7 @@ class SliderAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SliderViewholder {
         val context = parent.context
-        val binding = SliderViewholderBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding = SliderViewholderBinding.inflate(LayoutInflater.from(context),parent,false)
         return SliderViewholder(binding)
     }
 
@@ -61,13 +63,13 @@ class SliderAdapter(
         holder.binding.yearTxt.text = sliderItems[position].year
         holder.binding.hourTxt.text = sliderItems[position].time
 
-        /*holder.binding.watchBtn.setOnClickListener {
+        holder.binding.watchBtn.setOnClickListener {
 
-            val intent = Intent (holder.itemView.context,DetailActivity::class.java)
+            val intent = Intent (holder.itemView.context, DetailActivity::class.java)
             intent.putExtra("sliderobject",sliderItems[position])
             holder.itemView.context.startActivity(intent)
 
-        }*/
+        }
 
     }
 }

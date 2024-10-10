@@ -40,8 +40,9 @@ fun UpcomingMovieDetailDto.toUpcomingMovieDetailModel(): UpcomingMovieDetailMode
         poster = this.poster_path ?: "",
         time = this.release_date,
         trailer = this.homepage ?: "",
-        imdb = this.imdb_id ?: "",
+        popularity = (this.popularity ?: "").toString(),
         year = this.release_date.take(4).toIntOrNull() ?: 0,
         genre = this.genres.map { it.name },
     )
 }
+
