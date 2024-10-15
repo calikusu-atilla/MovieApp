@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">movieApp</string>
+    <string name="app_name">Cineverse</string>
     <string name="intro_title"><font color="#0D4B4D">Dünyanın Gerisinde \nKalmamak için \nTeknoloji Takipte Kalın</font></string>
     <string name="intro_text">Watch Premium Hundreds of tv Shows \nAnd Movie are Waiting for you right on \nthe phone</string>
     <string name="reset_password_text">Please enter your registered email address. \nYou will then be automatically redirected to the password reset screen.</string>

@@ -1,6 +1,7 @@
 package com.example.movieapp.presentation.adapter
 
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -29,6 +30,7 @@ class CastListAdapter(val cast: List<TmdbApiCastModel?>) : RecyclerView.Adapter<
 
     override fun getItemCount(): Int = filteredCast.size
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onBindViewHolder(holder: CastListViewholder, position: Int) {
 
         val currentCast = filteredCast[position]

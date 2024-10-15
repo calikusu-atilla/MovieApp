@@ -64,7 +64,7 @@ dependencies {
     kapt("androidx.hilt:hilt-compiler:1.2.0")
     implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
     implementation ("androidx.hilt:hilt-work:1.2.0")
-    implementation ("androidx.work:work-runtime-ktx:2.9.0")
+    implementation ("androidx.work:work-runtime-ktx:2.9.1")
 
 
     // Retrofit
@@ -80,7 +80,7 @@ dependencies {
     implementation("com.tbuonomo:dotsindicator:5.0")
 
     //FireBase
-    implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
+    implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
     implementation("com.google.firebase:firebase-analytics-ktx")
     implementation("com.google.firebase:firebase-firestore-ktx")
     implementation("com.google.firebase:firebase-auth-ktx")
@@ -89,9 +89,9 @@ dependencies {
 
     //Lifecycle
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.4")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.4")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.6")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.6")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.6")
 
     //ViewModel
     implementation("androidx.activity:activity-ktx:1.9.1")
@@ -100,7 +100,7 @@ dependencies {
     implementation("com.tbuonomo:dotsindicator:5.0")
 
     implementation ("com.github.bumptech.glide:glide:4.12.0")
-    annotationProcessor ("com.github.bumptech.glide:compiler:4.6.1")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
 
     //material M3
     implementation ("com.google.android.material:material:1.12.0")

@@ -1,5 +1,8 @@
 package com.example.movieapp.presentation.ui
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -9,7 +12,7 @@ import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.example.movieapp.databinding.ActivityCineverseBinding
-import com.example.movieapp.domain.model.SliderModel
+import com.example.movieapp.domain.model.CineverseModel
 import com.example.movieapp.presentation.adapter.CineverseSliderAdapter
 import com.example.movieapp.presentation.viewmodel.CineverseViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class CineverseActivity : BaseActivity() {
     private lateinit var binding: ActivityCineverseBinding
-    private var sliderItems: List<SliderModel> = emptyList()
+    private var sliderItems: List<CineverseModel> = emptyList()
     private val viewModel: CineverseViewModel by viewModels()
     private val sliderHandler = android.os.Handler() // Slider için Handler
     private val sliderRunnable = Runnable { // Slider için Runnable
@@ -36,13 +39,27 @@ class CineverseActivity : BaseActivity() {
 
     }
 
-    private fun initCineverse(items: SliderModel){
+    private fun initCineverse(items: CineverseModel){
 
         binding.nameTxt.text = items.name
         binding.ageTxt.text = items.age
         binding.genreTxt.text = items.genre
         binding.hourTxt.text = items.time
         binding.yearTxt.text = items.year
+        binding.imdbTxt.text = items.Imdb
+
+        binding.watchTrailerBtn.setOnClickListener{
+
+            val trailerId = items.trailer.replace("https://www.youtube.com/watch?v=", "")
+            val appIntent = Intent( Intent.ACTION_VIEW,Uri.parse("vnd.youtube:" + trailerId))
+            val webIntent = Intent( Intent.ACTION_VIEW,Uri.parse("https://www.youtube.com/watch?v=" + trailerId))
+
+                    try {
+                        startActivity(appIntent)
+                    }catch (ex: ActivityNotFoundException) {
+                        startActivity(webIntent)
+                    }
+                }
 
     }
 
@@ -61,7 +78,7 @@ class CineverseActivity : BaseActivity() {
         viewModel.loadCineverseBanner()
     }
 
-    private fun setupSlider(images: List<SliderModel>){
+    private fun setupSlider(images: List<CineverseModel>){
 
         binding.viewPagerCineverseSlider.adapter = CineverseSliderAdapter(images,binding.viewPagerCineverseSlider, this)
         binding.viewPagerCineverseSlider.clipChildren = false

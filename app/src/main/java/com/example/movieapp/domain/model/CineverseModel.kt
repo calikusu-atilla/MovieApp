@@ -2,9 +2,8 @@ package com.example.movieapp.domain.model
 
 import android.os.Parcel
 import android.os.Parcelable
-import java.io.Serializable
 
-data class SliderModel(
+data class CineverseModel(
     var image: String = "",
     var name: String = "",
     var genre: String = "",
@@ -14,7 +13,9 @@ data class SliderModel(
     var Imdb: String = "",
     var trailer: String = "",
     var description: String ="",
-    //var casts: ArrayList<String> = ArrayList(),
+    var casts: ArrayList<CineverseCastModel> = ArrayList(),
+    var reviews: ArrayList<CineverseReviewsModel> = ArrayList(),
+    var recommended: ArrayList<CineverseRecommendedModel> = ArrayList()
 
 ):Parcelable {
     constructor(parcel: Parcel) : this(
@@ -27,10 +28,11 @@ data class SliderModel(
         parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readString().toString(),
-        //parcel.createStringArrayList() ?: ArrayList()
+        parcel.createTypedArrayList(CineverseCastModel.CREATOR) ?: ArrayList(),
+        parcel.createTypedArrayList(CineverseReviewsModel.CREATOR) ?: ArrayList(),
+        parcel.createTypedArrayList(CineverseRecommendedModel.CREATOR) ?: ArrayList(),
     ) {
     }
-
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(image)
         parcel.writeString(name)
@@ -41,20 +43,23 @@ data class SliderModel(
         parcel.writeString(Imdb)
         parcel.writeString(trailer)
         parcel.writeString(description)
-        //parcel.writeStringList(casts)
+        parcel.writeTypedList(casts)
+        parcel.writeTypedList(reviews)
+        parcel.writeTypedList(recommended)
     }
 
     override fun describeContents(): Int {
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<SliderModel> {
-        override fun createFromParcel(parcel: Parcel): SliderModel {
-            return SliderModel(parcel)
+    companion object CREATOR : Parcelable.Creator<CineverseModel> {
+        override fun createFromParcel(parcel: Parcel): CineverseModel {
+            return CineverseModel(parcel)
         }
 
-        override fun newArray(size: Int): Array<SliderModel?> {
+        override fun newArray(size: Int): Array<CineverseModel?> {
             return arrayOfNulls(size)
         }
     }
+
 }

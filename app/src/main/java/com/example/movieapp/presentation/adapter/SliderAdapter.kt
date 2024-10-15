@@ -66,7 +66,7 @@ class SliderAdapter(
         holder.binding.watchBtn.setOnClickListener {
 
             val intent = Intent (holder.itemView.context, DetailActivity::class.java)
-            intent.putExtra("sliderobject",sliderItems[position])
+            intent.putExtra("slider_object",sliderItems[position])
             holder.itemView.context.startActivity(intent)
 
         }

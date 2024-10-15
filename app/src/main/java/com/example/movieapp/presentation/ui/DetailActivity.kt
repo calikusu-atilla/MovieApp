@@ -112,7 +112,7 @@ class DetailActivity : BaseActivity() {
         binding.titleTxt.text = details.title
         binding.imdbTxt.text = "IMDB " + details.popularity
         binding.movieTimesTxt.text = details.year.toString() + " - " + details.time.toString()
-        binding.movieSummery.text = details.description
+        binding.movieDescriptionTxt.text = details.description
 
         if (details.genre != null){
             binding.genreView.adapter = CategoryEachFilmAdapter(details.genre)
@@ -157,7 +157,7 @@ class DetailActivity : BaseActivity() {
         binding.titleTxt.text = topMovie.title
         binding.imdbTxt.text = "IMDB " + topMovie.Imdb.toString()
         binding.movieTimesTxt.text = topMovie.year.toString() + " - " + topMovie.time.toString()
-        binding.movieSummery.text = topMovie.description
+        binding.movieDescriptionTxt.text = topMovie.description
 
         if (topMovie.genre != null){
             binding.genreView.adapter = CategoryEachFilmAdapter(topMovie.genre)

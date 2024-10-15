@@ -40,7 +40,7 @@ data class TopMoviesModel (
     @TypeConverters(GenreTypeConverter::class)
     var genre: ArrayList<String> = ArrayList(),
 
-    //var casts: ArrayList<String> = ArrayList(),
+    //var cast: ArrayList<String> = ArrayList(),
 ):Parcelable {
     constructor(parcel: Parcel) : this(
         uuid = parcel.readInt(),
@@ -51,9 +51,8 @@ data class TopMoviesModel (
         parcel.readString().toString(),
         parcel.readInt(),
         parcel.readInt(),
-        parcel.createStringArrayList() ?: ArrayList()
-
-        //parcel.createStringArrayList() as ArrayList<String>,
+        parcel.createStringArrayList() ?: ArrayList(),
+        //parcel.createStringArrayList() ?: ArrayList()
         //parcel.createStringArrayList() as ArrayList<String>
     ) {
 
@@ -69,7 +68,7 @@ data class TopMoviesModel (
         parcel.writeInt(Imdb)
         parcel.writeInt(year)
         parcel.writeStringList(genre)
-       // parcel.writeStringList(casts)
+        //parcel.writeStringList(cast)
     }
 
     override fun describeContents(): Int {
