@@ -11,6 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.CenterInside
+import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.example.movieapp.databinding.ActivityCineverseBinding
 import com.example.movieapp.domain.model.CineverseModel
 import com.example.movieapp.presentation.adapter.CineverseSliderAdapter
@@ -100,6 +104,12 @@ class CineverseActivity : BaseActivity() {
                 super.onPageSelected(position)
                 sliderHandler.removeCallbacks(sliderRunnable)
                 initCineverse(images[position])
+
+                val imageUrl = images[position].image // Slider'daki resim URL'si
+                Glide.with(this@CineverseActivity)
+                    .load(imageUrl)
+                    .transform(jp.wasabeef.glide.transformations.BlurTransformation(5,5), FitCenter())
+                    .into(binding.backgroundImageView)
 
             }
         })

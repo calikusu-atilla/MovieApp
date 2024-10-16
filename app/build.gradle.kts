@@ -41,6 +41,7 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
 }
 
 dependencies {
@@ -125,4 +126,9 @@ dependencies {
     //Palette
     implementation ("androidx.palette:palette-ktx:1.0.0")
 
+    //Glide Transformation
+    implementation ("jp.wasabeef:glide-transformations:4.3.0")
+
+    //chip navigation bar
+    implementation ("com.github.ismaeldivita:chip-navigation-bar:1.4.0")
 }
