@@ -9,7 +9,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.movieapp.databinding.ViewholderCineverseCastBinding
 import com.example.movieapp.domain.model.CineverseCastModel
 
-class CineverseCastListAdapter(private var castItems: List<CineverseCastModel?>) : RecyclerView.Adapter<CineverseCastListAdapter.CineverseCastViewholder>() {
+class CineverseCastListAdapter(private var castItems: ArrayList<CineverseCastModel>) : RecyclerView.Adapter<CineverseCastListAdapter.CineverseCastViewholder>() {
 
     private var context: android.content.Context? = null
 

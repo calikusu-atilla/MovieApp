@@ -5,6 +5,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
+import android.view.ViewOutlineProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -15,6 +17,7 @@ import com.example.movieapp.domain.model.CineverseModel
 import com.example.movieapp.presentation.adapter.CineverseCastListAdapter
 import com.example.movieapp.presentation.adapter.CineverseRecommendedAdapter
 import com.example.movieapp.presentation.adapter.CineverseReviewsListAdapter
+import eightbitlab.com.blurview.RenderScriptBlur
 
 class CineverseDetailActivity : BaseActivity() {
 
@@ -34,7 +37,8 @@ class CineverseDetailActivity : BaseActivity() {
 
     private fun setVeriable() {
 
-        movieDetail = intent.getParcelableExtra<CineverseModel>("sliderobject")!!
+
+        movieDetail = intent.getParcelableExtra("sliderobject")!!
 
         val requestOptions = RequestOptions().transform(CenterCrop(), GranularRoundedCorners(0f,0f,100f,100f))
         Glide.with(this)
@@ -50,10 +54,18 @@ class CineverseDetailActivity : BaseActivity() {
         binding.ageTxt.text = movieDetail.age
         binding.movieDescriptionTxt.text = movieDetail.description
 
-        movieDetail.casts?.let {
+
+
+        if (movieDetail.casts.isNullOrEmpty()) {
+            binding.castProgressBar.visibility = View.VISIBLE
+            binding.castView.visibility = View.GONE
+        } else {
+            binding.castProgressBar.visibility = View.GONE
+            binding.castView.visibility = View.VISIBLE
             binding.castView.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
-            binding.castView.adapter = CineverseCastListAdapter(it)
+            binding.castView.adapter = CineverseCastListAdapter(movieDetail.casts)
         }
+
 
         if (movieDetail.recommended.isNullOrEmpty()) {
             binding.recommendedProgressBar.visibility = View.VISIBLE
@@ -93,6 +105,27 @@ class CineverseDetailActivity : BaseActivity() {
 
         }
 
+        binding.selectSeatsBtn.setOnClickListener {
+            val intent = Intent(this@CineverseDetailActivity,SeatListActivity::class.java)
+            intent.putExtra(    "seatMovie", movieDetail)
+            startActivity(intent)
+        }
+
+        setupBlurView()
+    }
+
+    private fun setupBlurView() {
+        val radius = 10f
+        val decorView: View = window.decorView
+        val rootView = decorView.findViewById<ViewGroup>(android.R.id.content)
+        val windowsBackground = decorView.background
+
+        binding.blurView.setupWith(rootView,RenderScriptBlur(this))
+            .setFrameClearDrawable(windowsBackground)
+            .setBlurRadius(radius)
+
+        binding.blurView.setOutlineProvider(ViewOutlineProvider.BACKGROUND)
+        binding.blurView.clipToOutline = true
 
     }
 }

@@ -261,7 +261,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="120dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -269,14 +269,15 @@
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/app_bar"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="70dp"
             android:layout_gravity="bottom"
             android:background="@color/Primary_Normal">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_height="60dp"
+                android:orientation="horizontal"
+                android:layout_marginBottom="40dp">
 
                 <ImageView
                     android:id="@+id/cineverseBtn"
@@ -284,6 +285,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_margin="5dp"
+                    android:layout_marginBottom="40dp"
                     android:layout_weight="0.2"
                     app:srcCompat="@drawable/icon3png" />
 
@@ -293,6 +295,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="0.2"
+                    android:layout_marginBottom="40dp"
                     android:visibility="invisible"
                     app:srcCompat="@drawable/icon" />
 
@@ -302,6 +305,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_margin="5dp"
+                    android:layout_marginBottom="40dp"
                     android:layout_weight="0.2"
                     app:srcCompat="@drawable/icon2" />
             </LinearLayout>
@@ -313,6 +317,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_anchor="@id/app_bar"
-            app:maxImageSize="30dp" />
+            app:maxImageSize="40dp" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

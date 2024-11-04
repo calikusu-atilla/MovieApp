@@ -3,8 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:adjustViewBounds="false"
-    android:minHeight="550dp"
+    android:minHeight="575dp"
     android:scaleType="centerCrop"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
     android:id="@+id/cineverseSlider">
 
 </ImageView>

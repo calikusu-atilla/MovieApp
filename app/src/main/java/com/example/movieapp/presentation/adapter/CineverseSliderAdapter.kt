@@ -23,14 +23,13 @@ class CineverseSliderAdapter(
 ) : RecyclerView.Adapter<CineverseSliderAdapter.CineverseViewHolder>() {
 
     private val runnable = Runnable {
-        sliderItems = sliderItems
         notifyDataSetChanged()
     }
 
     class CineverseViewHolder(val binding: CineverseSliderViewhoderBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun setImage(sliderItems: CineverseModel, context: Context, activity: CineverseActivity) {
-            val requestOptions = RequestOptions().transform(CenterCrop(), RoundedCorners(40))
+            val requestOptions = RequestOptions().transform(CenterCrop(), RoundedCorners(30))
 
             Glide.with(context)
                 .asBitmap()
@@ -53,6 +52,7 @@ class CineverseSliderAdapter(
             viewPager2.post(runnable)
 
         holder.binding.cineverseSlider.setOnClickListener {
+            viewPager2.parent.requestDisallowInterceptTouchEvent(true)
             val intent = Intent ( holder.itemView.context, CineverseDetailActivity::class.java)
             intent.putExtra("sliderobject", sliderItems[position])
             holder.itemView.context.startActivity(intent)

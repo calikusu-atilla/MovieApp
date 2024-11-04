@@ -5,21 +5,20 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
+import android.view.ViewOutlineProvider
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.CenterInside
-import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.example.movieapp.databinding.ActivityCineverseBinding
 import com.example.movieapp.domain.model.CineverseModel
 import com.example.movieapp.presentation.adapter.CineverseSliderAdapter
 import com.example.movieapp.presentation.viewmodel.CineverseViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import eightbitlab.com.blurview.RenderScriptBlur
 
 @AndroidEntryPoint
 class CineverseActivity : BaseActivity() {
@@ -40,6 +39,7 @@ class CineverseActivity : BaseActivity() {
 
 
         initCineverseSlider()
+
 
     }
 
@@ -72,7 +72,7 @@ class CineverseActivity : BaseActivity() {
         viewModel.banners.observe(this, Observer { banners ->
             if (banners.isNotEmpty()) {
                 sliderItems = banners
-                initCineverse(banners[0])
+                initCineverse(banners[4])
                 setupSlider(banners)
             }
             binding.progressBarCineverse.visibility = View.GONE
@@ -84,6 +84,8 @@ class CineverseActivity : BaseActivity() {
 
     private fun setupSlider(images: List<CineverseModel>){
 
+        //setupBlurView()
+
         binding.viewPagerCineverseSlider.adapter = CineverseSliderAdapter(images,binding.viewPagerCineverseSlider, this)
         binding.viewPagerCineverseSlider.clipChildren = false
         binding.viewPagerCineverseSlider.clipToPadding = false
@@ -91,7 +93,7 @@ class CineverseActivity : BaseActivity() {
         binding.viewPagerCineverseSlider.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
 
         val compositePageTransformer = CompositePageTransformer().apply {
-            addTransformer(MarginPageTransformer(60))
+            addTransformer(MarginPageTransformer(30))
             addTransformer(ViewPager2.PageTransformer { page, position ->
                 val  r = 1 - Math.abs(position)
                 page.scaleY = 0.85f + r * 0.15f
@@ -105,11 +107,15 @@ class CineverseActivity : BaseActivity() {
                 sliderHandler.removeCallbacks(sliderRunnable)
                 initCineverse(images[position])
 
-                val imageUrl = images[position].image // Slider'daki resim URL'si
-                Glide.with(this@CineverseActivity)
-                    .load(imageUrl)
-                    .transform(jp.wasabeef.glide.transformations.BlurTransformation(5,5), FitCenter())
-                    .into(binding.backgroundImageView)
+                /*
+
+                     val imageUrl = images[position].image // Slider'daki resim URL'si
+                        Glide.with(this@CineverseActivity)
+                           .load(imageUrl)
+                           .transform(jp.wasabeef.glide.transformations.BlurTransformation(blurLevel, 5), FitCenter())
+                           .into(binding.backgroundImageView)
+
+               */
 
             }
         })
@@ -124,6 +130,22 @@ class CineverseActivity : BaseActivity() {
     override fun onDestroy() {
         super.onDestroy()
         sliderHandler.removeCallbacksAndMessages(null)
+    }
+
+    private fun setupBlurView() {
+        val radius = 10f
+        val decorView: View = window.decorView
+        val rootView = decorView.findViewById<ViewGroup>(android.R.id.content)
+        val windowsBackground = decorView.background
+
+        binding.blurView.setupWith(rootView, RenderScriptBlur(this))
+            .setFrameClearDrawable(windowsBackground)
+            .setBlurRadius(radius)
+
+        binding.blurView.setOutlineProvider(ViewOutlineProvider.BACKGROUND)
+        binding.blurView.clipToOutline = true
+
+
     }
 
 }

@@ -5,39 +5,39 @@
         android:id="@+id/movie"
         android:icon="@drawable/movie_dark"
         android:title="Movies"
-        app:cnb_backgroundColor="#FF026670"
-        app:cnb_iconColor="#FFFFFFFF"
+        app:cnb_backgroundColor="#FFD194"
+        app:cnb_iconColor="#374045"
     />
 
     <item
         android:id="@+id/search"
         android:icon="@drawable/search_dark"
         android:title="Search"
-        app:cnb_backgroundColor="#FF026670"
-        app:cnb_iconColor="#FFFFFFFF"
+        app:cnb_backgroundColor="#FFD194"
+        app:cnb_iconColor="#374045"
         />
 
     <item
         android:id="@+id/home"
         android:icon="@drawable/home_dark"
         android:title="Home"
-        app:cnb_backgroundColor="#FF026670"
-        app:cnb_iconColor="#FFFFFFFF"
+        app:cnb_backgroundColor="#FFD194"
+        app:cnb_iconColor="#374045"
         />
 
     <item
         android:id="@+id/ticket"
         android:icon="@drawable/ticket_dark"
         android:title="Ticket"
-        app:cnb_backgroundColor="#FF026670"
-        app:cnb_iconColor="#FFFFFFFF"
+        app:cnb_backgroundColor="#FFD194"
+        app:cnb_iconColor="#374045"
         />
 
     <item
         android:id="@+id/account"
         android:icon="@drawable/account_dark"
         android:title="Account"
-        app:cnb_backgroundColor="#FF026670"
-        app:cnb_iconColor="#FFFFFFFF"
+        app:cnb_backgroundColor="#FFD194"
+        app:cnb_iconColor="#374045"
         />
 </menu>

@@ -6,12 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.ui.CineverseDetailActivity"
-    android:background="@drawable/gradient_color_background">
+    android:background="@drawable/cineverse_gradient_color_background">
+
 
         <ImageView
             android:id="@+id/filmPic"
             android:layout_width="0dp"
-            android:layout_height="450dp"
+            android:layout_height="600dp"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -38,35 +39,53 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/share_2_dark" />
 
+    <eightbitlab.com.blurview.BlurView
+        android:id="@+id/blurView"
+        android:layout_width="0dp"
+        android:layout_height="500dp"
+        android:layout_margin="24dp"
+        android:background="@drawable/detail_blur_bg"
+        app:blurOverlayColor="#90000000"
+        app:layout_constraintBottom_toBottomOf="@+id/filmPic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filmPic">
+
+
         <ScrollView
-            android:id="@+id/scrollView3"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/filmPic"
-            app:layout_constraintBottom_toBottomOf="parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="16dp">
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                   >
+                    android:orientation="vertical">
 
 
                     <TextView
                         android:id="@+id/nameTxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="8dp"
                         android:text="name"
-                        android:textColor="@color/Primary_Normal"
+                        android:textColor="@color/white"
                         android:textSize="28sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
@@ -76,10 +95,11 @@
                         android:id="@+id/genreTxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="4dp"
                         android:text="genre"
-                        android:textColor="@color/Primary_Normal"
+                        android:textColor="@color/white"
                         android:textSize="16sp"
+                        android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="@+id/nameTxt"
                         app:layout_constraintTop_toBottomOf="@+id/nameTxt" />
 
@@ -89,9 +109,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="24dp"
                     android:orientation="horizontal">
 
 
@@ -166,13 +186,15 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="16dp"
-                    android:layout_marginEnd="16dp">
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="24dp">
 
                     <ImageView
                         android:id="@+id/imageView13"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
+                        android:layout_marginTop="8dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -184,7 +206,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:text="0"
-                        android:textSize="16sp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@id/imageView13"
                         app:layout_constraintStart_toEndOf="@+id/imageView13"
                         app:layout_constraintTop_toTopOf="@+id/imageView13" />
@@ -193,6 +216,7 @@
                         android:id="@+id/imageView15"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -204,8 +228,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="4dp"
                         android:text="Watch Trailer"
-                        android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/imageView15"
                         app:layout_constraintEnd_toStartOf="@+id/imageView15"
                         app:layout_constraintTop_toTopOf="@+id/imageView15" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -213,14 +238,16 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
                     android:orientation="vertical">
 
                     <View
                         android:id="@+id/view2"
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
                         android:background="@drawable/gradient" />
 
                     <TextView
@@ -228,6 +255,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:text="About the movie"
+                        android:textColor="@color/white"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -235,35 +263,63 @@
                         android:id="@+id/movieDescriptionTxt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        android:text="DescriptionTxt" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="Cast"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/castView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:text="DescriptionTxt"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp">
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp">
+
+                    <TextView
+                        android:id="@+id/textView11"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Cast"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/castView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+                    <ProgressBar
+                        android:id="@+id/castProgressBar"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="@+id/castView"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/castView"
+                        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp">
 
                     <View
                         android:id="@+id/view4"
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/gradient"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -274,6 +330,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="Reviews"
+                        android:textColor="@color/white"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="@id/view4"
@@ -285,6 +342,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text=" reviews"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="@id/view4"
                         app:layout_constraintTop_toBottomOf="@+id/view4" />
 
@@ -293,6 +352,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@+id/textView14"
                         app:layout_constraintEnd_toStartOf="@+id/textView14"
                         app:layout_constraintTop_toTopOf="@+id/textView14" />
@@ -320,14 +381,15 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp">
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp">
 
                     <View
                         android:id="@+id/view5"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/gradient"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -336,7 +398,10 @@
                         android:id="@+id/textView21"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
                         android:text="Recommended"
+                        android:textColor="@color/white"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="@id/view5"
@@ -359,27 +424,32 @@
                         android:layout_height="match_parent"
                         app:layout_constraintEnd_toEndOf="@id/textView21"
                         app:layout_constraintStart_toStartOf="@id/textView21"
-                        app:layout_constraintTop_toBottomOf="@+id/textView21" >
+                        app:layout_constraintTop_toBottomOf="@+id/textView21">
 
                     </androidx.recyclerview.widget.RecyclerView>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/selectSeatsBtn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="48dp"
-                    android:background="@drawable/btn_blackground"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:text="Select Seats"
-                    android:textColor="@color/Primary_Normal"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
             </LinearLayout>
+             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </ScrollView>
+
+    </eightbitlab.com.blurview.BlurView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/selectSeatsBtn"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:text="Select Seats"
+        android:textStyle="bold"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:textSize="18sp"
+        android:textColor="#374045"
+        android:background="@drawable/cinevers_btn_blackground"
+        app:layout_constraintBottom_toBottomOf="@+id/blurView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/blurView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

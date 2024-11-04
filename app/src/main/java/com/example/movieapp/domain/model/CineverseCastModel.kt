@@ -8,10 +8,10 @@ data class CineverseCastModel(
     var Actor: String = "",
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.readString() ?: "", // Null kontrolü
-        parcel.readString() ?: "",  // Null kontrolü
-    )
-
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+    ) {
+    }
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(PicUrl)
         parcel.writeString(Actor)
