@@ -1,5 +1,3 @@
-package com.example.movieapp.presentation.adapter
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,56 +7,66 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
 import com.example.movieapp.databinding.CineverseSnacksViewholderBinding
 import com.example.movieapp.domain.model.CineverseFoodModel
+import com.example.movieapp.presentation.viewmodel.CineverseSnackAndTicketViewModel
 
-class CineverseSnacksAdapter(private val foodlist: List<CineverseFoodModel>, private val onSnackAddListener: OnSnackAddListener  ):RecyclerView.Adapter<CineverseSnacksAdapter.CineverseSnacksViewholder>() {
+class CineverseSnacksAdapter(
+    private val foodlist: List<CineverseFoodModel>,
+    private val viewModel: CineverseSnackAndTicketViewModel
+) : RecyclerView.Adapter<CineverseSnacksAdapter.CineverseSnacksViewHolder>() {
 
-    interface OnSnackAddListener {
-        fun onAddSnack(foodItem: CineverseFoodModel, quantity: Int)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CineverseSnacksViewHolder {
+        val binding = CineverseSnacksViewholderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return CineverseSnacksViewHolder(binding)
     }
 
-    class CineverseSnacksViewholder(val binding: CineverseSnacksViewholderBinding):RecyclerView.ViewHolder(binding.root) {
-
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CineverseSnacksViewholder {
-        return CineverseSnacksViewholder(CineverseSnacksViewholderBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+    override fun onBindViewHolder(holder: CineverseSnacksViewHolder, position: Int) {
+        holder.bind(foodlist[position])
     }
 
     override fun getItemCount(): Int = foodlist.size
 
-    override fun onBindViewHolder(holder: CineverseSnacksViewholder, position: Int) {
-        val foodItem = foodlist[position]
-        var snacksCount = 1
-        holder.binding.snacksCountTxt.text = snacksCount.toString()
+    inner class CineverseSnacksViewHolder(private val binding: CineverseSnacksViewholderBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-        holder.binding.snacksPriceTxt.text = "$${foodItem.foodPrice}"
-        holder.binding.snacksNameTxt.text = foodItem.foodName
+        fun bind(snack: CineverseFoodModel) {
+            binding.apply {
+                snacksNameTxt.text = snack.foodName
+                snacksPriceTxt.text = "$${snack.foodPrice}"
+                snacksCountTxt.text = snack.quantity.toString()
 
-        Glide.with(holder.itemView.context)
-            .load(foodItem.foodPic)
-            .apply(RequestOptions().transform(CenterCrop()))
-            .into(holder.binding.snacksPic)
+                Glide.with(root.context)
+                    .load(snack.foodPic)
+                    .apply(RequestOptions().transform(CenterCrop()))
+                    .into(snacksPic)
 
+                addBtn.setOnClickListener {
+                    addBtn.visibility = View.GONE
+                    quantityLayout.visibility = View.VISIBLE
+                    snack.quantity = 1
+                    snacksCountTxt.text = snack.quantity.toString()
+                    viewModel.updateSnackQuantity(snack, snack.quantity)
+                }
 
-        holder.binding.addBtn.setOnClickListener {
-            holder.binding.addBtn.visibility = View.GONE
-            holder.binding.quantityLayout.visibility = View.VISIBLE
+                increaseBtn.setOnClickListener {
+                    if (snack.quantity < 10) {
+                        snack.quantity++
+                        snacksCountTxt.text = snack.quantity.toString()
+                        viewModel.updateSnackQuantity(snack, snack.quantity)
+                    }
+                }
 
-            onSnackAddListener.onAddSnack(foodItem, snacksCount)
-        }
-
-        holder.binding.increaseBtn.setOnClickListener {
-            snacksCount++
-            holder.binding.snacksCountTxt.text = snacksCount.toString()
-        }
-
-        holder.binding.decreaseBtn.setOnClickListener {
-            if (snacksCount > 1) {
-                snacksCount--
-                holder.binding.snacksCountTxt.text = snacksCount.toString()
+                decreaseBtn.setOnClickListener {
+                    if (snack.quantity > 1) {
+                        snack.quantity--
+                        snacksCountTxt.text = snack.quantity.toString()
+                        viewModel.updateSnackQuantity(snack, snack.quantity)
+                    } else {
+                        viewModel.removeSnack(snack)
+                        addBtn.visibility = View.VISIBLE
+                        quantityLayout.visibility = View.GONE
+                    }
+                }
             }
         }
-
-
     }
 }

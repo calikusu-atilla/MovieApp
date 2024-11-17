@@ -1,5 +1,6 @@
 package com.example.movieapp.presentation.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,23 +13,25 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class CineverseSnackAndTicketViewModel @Inject constructor(private val firebaseDatabase: FirebaseDatabase): ViewModel(){
-
+class CineverseSnackAndTicketViewModel @Inject constructor(private val firebaseDatabase: FirebaseDatabase) : ViewModel() {
 
     private val _foodlist = MutableLiveData<MutableList<CineverseFoodModel>>()
-    val foodlist : LiveData<MutableList<CineverseFoodModel>> = _foodlist
+    val foodlist: LiveData<MutableList<CineverseFoodModel>> = _foodlist
+
 
     private val _selectedSnacks = MutableLiveData<MutableList<CineverseFoodModel>>(mutableListOf())
-    val selectedSnacks: LiveData<MutableList<CineverseFoodModel>> get() = _selectedSnacks
+    val selectedSnacks: LiveData<MutableList<CineverseFoodModel>> = _selectedSnacks
 
-    fun loadFoodList(){
-        val Ref = firebaseDatabase.getReference("Foodlist")
-        Ref.addValueEventListener(object : ValueEventListener{
+
+    // Firebase'den "Foodlist" referansına giderek yemek listesini yükler.
+    fun loadFoodList() {
+        val ref = firebaseDatabase.getReference("Foodlist")
+        ref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val list = mutableListOf<CineverseFoodModel>()
-                for (child in snapshot.children){
+                for (child in snapshot.children) {
                     val data = child.getValue(CineverseFoodModel::class.java)
-                    if (data!=null){
+                    if (data != null) {
                         list.add(data)
                     }
                 }
@@ -36,15 +39,28 @@ class CineverseSnackAndTicketViewModel @Inject constructor(private val firebaseD
             }
 
             override fun onCancelled(error: DatabaseError) {
-
+                Log.e("FirebaseError", "Data load cancelled: ${error.message}")
             }
         })
     }
 
-    fun addSelectedSnack(foodItem: CineverseFoodModel) {
-        val updatedList = _selectedSnacks.value?.toMutableList() ?: mutableListOf()
-        updatedList.add(foodItem)
-        _selectedSnacks.value = updatedList
+
+    fun updateSnackQuantity(snack: CineverseFoodModel, newQuantity: Int) {
+
+        val currentList = _selectedSnacks.value ?: mutableListOf()
+        val index = currentList.indexOfFirst { it.foodName == snack.foodName }
+        if (index != -1) {
+            currentList[index].quantity = newQuantity
+        }else {
+            snack.quantity = newQuantity
+            currentList.add(snack)
+        }
+        _selectedSnacks.value = currentList
     }
 
+    fun removeSnack (snack: CineverseFoodModel) {
+        val currentList = _selectedSnacks.value ?: mutableListOf()
+        currentList.remove(snack)
+        _selectedSnacks.value = currentList
+    }
 }

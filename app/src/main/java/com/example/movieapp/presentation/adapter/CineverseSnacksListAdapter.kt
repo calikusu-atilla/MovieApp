@@ -1,42 +1,45 @@
 package com.example.movieapp.presentation.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.databinding.CineverseSnackslistViewholderBinding
 import com.example.movieapp.domain.model.CineverseFoodModel
 
-class CineverseSnacksListAdapter(private val SelectedSnacksList: MutableList<CineverseFoodModel>):RecyclerView.Adapter<CineverseSnacksListAdapter.CineverseSnacksListViewholder>() {
 
-    inner class CineverseSnacksListViewholder(val binding: CineverseSnackslistViewholderBinding): RecyclerView.ViewHolder(binding.root) {
 
+class CineverseSnacksListAdapter(private val selectedSnacksList: MutableList<CineverseFoodModel>) : RecyclerView.Adapter<CineverseSnacksListAdapter.CineverseSnacksListViewHolder>() {
+
+
+    fun updateSnacksList(newSnacksList: List<CineverseFoodModel>) {
+        selectedSnacksList.clear()
+        selectedSnacksList.addAll(newSnacksList)
+        //notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CineverseSnacksListViewholder {
-        val binding = CineverseSnackslistViewholderBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-        return CineverseSnacksListViewholder(binding)
+    inner class CineverseSnacksListViewHolder(val binding: CineverseSnackslistViewholderBinding) : RecyclerView.ViewHolder(binding.root)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CineverseSnacksListViewHolder {
+        val binding = CineverseSnackslistViewholderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return CineverseSnacksListViewHolder(binding)
     }
 
+    override fun onBindViewHolder(holder: CineverseSnacksListViewHolder, position: Int) {
 
-    override fun onBindViewHolder(holder: CineverseSnacksListViewholder, position: Int) {
-        val snack = SelectedSnacksList[position]
+        val snack = selectedSnacksList[position]
 
         holder.binding.snacksNameTxt.text = snack.foodName
-        holder.binding.snacksListPriceTxt.text = "$ ${snack.foodPrice}"
+        holder.binding.snacksListPriceTxt.text = "$${snack.foodPrice * snack.quantity}"
         holder.binding.snacksCountTxt.text = snack.quantity.toString()
 
-
         holder.binding.snacksRemoveBtn.setOnClickListener {
-            SelectedSnacksList.removeAt(position)
+            selectedSnacksList.removeAt(position)
             notifyItemRemoved(position)
         }
-
     }
 
-    override fun getItemCount(): Int = SelectedSnacksList.size
+    override fun getItemCount(): Int = selectedSnacksList.size
 
-    fun addSnack(snack: CineverseFoodModel, quantity: Int){
-        SelectedSnacksList.add(snack)
-        notifyItemInserted(SelectedSnacksList.size -1)
-    }
+
 }

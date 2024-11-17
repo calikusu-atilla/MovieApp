@@ -1,7 +1,7 @@
 package com.example.movieapp.presentation.ui
 
+import CineverseSnacksAdapter
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewOutlineProvider
@@ -12,9 +12,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.movieapp.databinding.ActivitySnackAndTicketActivityBinding
-import com.example.movieapp.domain.model.CineverseFoodModel
 import com.example.movieapp.domain.model.CineverseModel
-import com.example.movieapp.presentation.adapter.CineverseSnacksAdapter
 import com.example.movieapp.presentation.adapter.CineverseSnacksListAdapter
 import com.example.movieapp.presentation.viewmodel.CineverseSnackAndTicketViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,56 +26,26 @@ class SnackAndTicketActivityActivity : BaseActivity() {
     private val viewModel: CineverseSnackAndTicketViewModel by viewModels()
     private var totalPrice: Double = 0.0
     private var seatCount: Int = 0
-    private var selectedSeats: String ?= null
-    private var selectedTime: String ?= null
-    private var selectedDate: String ?= null
+    private var selectedSeats: String? = null
+    private var selectedTime: String? = null
+    private var selectedDate: String? = null
     private var convenienceFees: Double = 30.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySnackAndTicketActivityBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
-
+        setContentView(binding.root)
 
 
         setVeriable()
         initSnacks()
         selectedSnacksList()
-
-
-
-    }
-
-    private fun initSnacks() {
-        binding.progressBarSnacks.visibility = View.VISIBLE
-        viewModel.foodlist.observe(this) { foodlist ->
-            Log.d("SnackAndTicketActivity", "Food list details: $foodlist")
-
-            if (foodlist != null) {
-                binding.recyclerViewSnacks.visibility = View.VISIBLE
-                binding.recyclerViewSnacks.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false)
-                binding.recyclerViewSnacks.adapter = CineverseSnacksAdapter(foodlist,object : CineverseSnacksAdapter.OnSnackAddListener{
-                    override fun onAddSnack(foodItem: CineverseFoodModel, quantity: Int) {
-                        addSnackToSelectedList(foodItem, 1)
-                    }
-
-                })
-            } else {
-                binding.recyclerViewSnacks.visibility = View.GONE
-            }
-
-            binding.progressBarSnacks.visibility = View.GONE
-        }
-
-        viewModel.loadFoodList()
     }
 
     private fun setVeriable() {
-
         getIntentExtra()
 
-        val requestOptions = RequestOptions().transform(CenterCrop(),GranularRoundedCorners(0f,0f,100f,100f))
+        val requestOptions = RequestOptions().transform(CenterCrop(), GranularRoundedCorners(0f, 0f, 100f, 100f))
         Glide.with(this)
             .load(movie.image)
             .apply(requestOptions)
@@ -92,38 +60,42 @@ class SnackAndTicketActivityActivity : BaseActivity() {
         binding.convenienceFeesPriceTxt.text = convenienceFees.toString()
 
         setupBlurView()
-
     }
 
-    private fun selectedSnacksList(){
+    private fun initSnacks() {
+        binding.progressBarSnacks.visibility = View.VISIBLE
+        viewModel.foodlist.observe(this) { foodlist ->
+            binding.progressBarSnacks.visibility = View.GONE
+            foodlist?.let {
+                binding.recyclerViewSnacks.apply {
+                    visibility = View.VISIBLE
+                    layoutManager = LinearLayoutManager(this@SnackAndTicketActivityActivity, LinearLayoutManager.HORIZONTAL, false)
+                    adapter = CineverseSnacksAdapter(it,viewModel)
+                }
+            } ?: run {
+                binding.recyclerViewSnacks.visibility = View.GONE
+            }
+        }
+        viewModel.loadFoodList()
+    }
+
+    private fun selectedSnacksList() {
         val adapter = CineverseSnacksListAdapter(mutableListOf())
         binding.recyclerViewSnacksList.adapter = adapter
-        binding.recyclerViewSnacksList.layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
+        binding.recyclerViewSnacksList.layoutManager = LinearLayoutManager(this@SnackAndTicketActivityActivity, LinearLayoutManager.VERTICAL, false)
 
-
-        viewModel.selectedSnacks.observe(this){ selectedSnacks ->
-            selectedSnacks.lastOrNull()?.let { snackItem ->
-                adapter.addSnack(snackItem, 1)
-            }
+        viewModel.selectedSnacks.observe(this) {selectedSnacksList ->
+            adapter.updateSnacksList(selectedSnacksList)
         }
     }
 
-    private fun addSnackToSelectedList(foodItem: CineverseFoodModel, quantity: Int){
-        viewModel.addSelectedSnack(foodItem)
-    }
-
-
-    private fun getIntentExtra () {
-
+    private fun getIntentExtra() {
         movie = intent.getParcelableExtra("seatListMovie")!!
-        totalPrice = intent.getDoubleExtra("totalPrice",0.0)
+        totalPrice = intent.getDoubleExtra("totalPrice", 0.0)
         seatCount = intent.getIntExtra("seatCount", 0)
         selectedSeats = intent.getStringArrayListExtra("selectedSeats").toString()
         selectedDate = intent.getStringExtra("selectedDate")
         selectedTime = intent.getStringExtra("selectedTime")
-
-
-
     }
 
     private fun setupBlurView() {
@@ -139,5 +111,4 @@ class SnackAndTicketActivityActivity : BaseActivity() {
         binding.blurView.setOutlineProvider(ViewOutlineProvider.BACKGROUND)
         binding.blurView.clipToOutline = true
     }
-
 }

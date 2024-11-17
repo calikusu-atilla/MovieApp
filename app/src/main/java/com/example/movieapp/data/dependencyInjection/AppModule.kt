@@ -1,11 +1,17 @@
 package com.example.movieapp.data.dependencyInjection
 
+import android.content.Context
+import androidx.room.Room
+import com.example.movieapp.data.local.dao.CartDao
+import com.example.movieapp.data.local.database.CartDatabase
 import com.example.movieapp.data.remote.MovieAPI
 import com.example.movieapp.data.remote.TmdbAPI
+import com.example.movieapp.data.repository.CartRepositoryImpl
 import com.example.movieapp.data.repository.CastMoviesRepositoryImpl
 import com.example.movieapp.data.repository.MovieRepositoryImpl
 import com.example.movieapp.data.repository.TredingMoviesRepositoryImpl
 import com.example.movieapp.data.repository.UpcomingMoviesRepositoryImpl
+import com.example.movieapp.domain.repository.CartRepository
 import com.example.movieapp.domain.repository.CastMoviesRepository
 import com.example.movieapp.domain.repository.MovieRepository
 import com.example.movieapp.domain.repository.TredingMoviesRepository
@@ -16,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -77,6 +84,25 @@ object AppModule {
     @Singleton
     fun provideCastRepository(api: TmdbAPI): CastMoviesRepository{
         return CastMoviesRepositoryImpl(api = api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDataBase(@ApplicationContext context: Context): CartDatabase {
+        return Room.databaseBuilder(context, CartDatabase::class.java, "cartdatebase").fallbackToDestructiveMigration().build()
+
+    }
+
+    @Provides
+    @Singleton
+    fun provideCartDao(database: CartDatabase): CartDao {
+        return database.cartDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideCartRepository( cartDao: CartDao): CartRepository {
+        return CartRepositoryImpl(cartDao)
     }
 
 }
