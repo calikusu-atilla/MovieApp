@@ -11,7 +11,7 @@ import com.example.movieapp.databinding.ActivityRegisterBinding
 import com.example.movieapp.presentation.viewmodel.AuthViewModel
 import com.example.movieapp.presentation.viewmodel.AuthViewModelFactory
 
-class RegisterActivity : BaseActivity() {
+class SingUpActivity : BaseActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
     private val authViewModel : AuthViewModel by viewModels { AuthViewModelFactory(AuthRepository(FirebaseAuthManager(this))) }
@@ -25,7 +25,7 @@ class RegisterActivity : BaseActivity() {
 
 
         binding.loginTxt.setOnClickListener {
-            val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+            val intent = Intent(this@SingUpActivity, LoginActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -46,17 +46,19 @@ class RegisterActivity : BaseActivity() {
         })
 
         binding.registerBtn.setOnClickListener {
-            val  email = binding.usernameTxt.text.toString().trim()
+            val  username = binding.usernameTxt.text.toString().trim()
             val  password = binding.passwordTxt.text.toString().trim()
             val  confirmPassword = binding.confirmPasswordTxt.text.toString().trim()
+            val  email = binding.emailTxt.text.toString().trim()
 
-            if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-                Toast.makeText(this, "Lütfen tüm alanları doldurun", Toast.LENGTH_SHORT).show()
+
+            if (username.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+                Toast.makeText(this, "Please Fill All Details", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             if (password == confirmPassword) {
-                authViewModel.register(email,password)
+                authViewModel.register(username,email,password,confirmPassword)
             } else {
                 Toast.makeText(this,"Lütfen şifreleri kontrol ediniz. Uyuşmuyor.. ", Toast.LENGTH_LONG).show()
             }

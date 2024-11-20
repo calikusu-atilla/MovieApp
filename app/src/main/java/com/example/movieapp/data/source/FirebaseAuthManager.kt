@@ -1,16 +1,34 @@
 package com.example.movieapp.data.source
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.widget.Toast
+import com.example.movieapp.domain.model.UserModel
+import com.example.movieapp.presentation.ui.LoginActivity
+import com.example.movieapp.presentation.ui.MainActivity
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.database
 
 class FirebaseAuthManager(private val context: Context) {
 
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance() //Firebase Auth işlemleri tanımlanıyor
 
-    fun register(email: String, password: String, callback: (Boolean, String?) -> Unit) {
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance() //Firebase Auth işlemleri tanımlanıyor
+    private val firebaseDatabase : DatabaseReference = Firebase.database.reference
+
+    fun register(userName: String, email: String, password: String, confirmPassword: String, callback: (Boolean, String?) -> Unit) {
+
+        if (userName.isBlank() || email.isBlank() || password.isBlank() || confirmPassword.isBlank()) {
+            Toast.makeText(context, "Please fill all details",Toast.LENGTH_SHORT).show()
+        }else{
+            createAccount(userName, email, password, confirmPassword)
+        }
+
+     /*
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -40,22 +58,53 @@ class FirebaseAuthManager(private val context: Context) {
                     callback(false, task.exception?.message)
                 }
             }
+
+      */
+    }
+
+    private fun createAccount(userName: String, email: String, password: String, confirmPassword: String) {
+        auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                saveUserData(userName,email,password,confirmPassword)
+                Toast.makeText(context,"Account created successfully", Toast.LENGTH_SHORT).show()
+                val intent = Intent(context, LoginActivity::class.java)
+                context.startActivity(intent)
+                if (context is Activity) {
+                    context.finish()
+                }
+            }else {
+                Toast.makeText(context,"Account Creation Fail", Toast.LENGTH_SHORT).show()
+                Log.d("Account", "createAccount: Failure", task.exception)
+            }
+        }
+    }
+
+    //save data in to database
+    private fun saveUserData(userName: String, email: String, password: String, confirmPassword: String) {
+
+        val user = UserModel(userName,email,password,confirmPassword)
+        val userId: String = FirebaseAuth.getInstance().currentUser!!.uid
+
+        //save user data Firebase database
+        userId?.let { userId ->
+            firebaseDatabase.child("User").child(userId).setValue(user)
+        }
     }
 
 
 
-    fun login(
-        email: String,
-        password: String,
-        callback: (Boolean, String?) -> Unit
-    ) { //login fonsiyonu kullanıcıdan email ve password bilgileri alınır giriş işleminin sonucunu callback atanır. callback giriş işleminin başarılı olup olmadığını belirten bir Boolean ve hata mesajını içerebilecek bir String parametre alır.
-        auth.signInWithEmailAndPassword(
-            email,
-            password
-        )       //signInWithEmailAndPassword metodu, giriş işlemini başlatır
-            .addOnCompleteListener { task -> //addOnCompleteListener metodu ile işlem tamamlandığında yapılacakları belirtir. task nesnesi, işlemin sonucunu içerir.
-                val user = auth.currentUser // giriş yapmış olan kullanıcı alınıyor
-                if (user?.isEmailVerified == true)   //E- posta doğrulaması kontrol ediliyor
+    fun login(email: String, password: String, callback: (Boolean, String?) -> Unit) {
+
+        if (email.isBlank() || password.isBlank()){
+            Toast.makeText(context,"Please fill all details", Toast.LENGTH_SHORT).show()
+        }else {
+            createUserAccount(email,password)
+        }
+
+        /*
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+                val user = auth.currentUser
+                if (user?.isEmailVerified == true)
 
                 // E-posta doğrulanmış
 
@@ -77,6 +126,44 @@ class FirebaseAuthManager(private val context: Context) {
                     callback(false, "E-posta doğrulanmamış")
                 }
             }
+
+         */
+    }
+
+    private fun createUserAccount(email: String, password: String) {
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            if (task.isSuccessful){
+                val user = auth.currentUser
+                updateUi(user)
+            }else {
+                auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener{ task ->
+                    if (task.isSuccessful){
+                        val user = auth.currentUser
+                        loginsaveUserData(email,password)
+                        updateUi(user)
+                    }else {
+                        Toast.makeText(context,"Authentication faile", Toast.LENGTH_SHORT).show()
+                        Log.d("Account","createUserAccount: Authentication failed", task.exception)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun loginsaveUserData(email: String, password: String) {
+        val user = UserModel("",email, password, "")
+        val userId: String? = FirebaseAuth.getInstance().currentUser?.uid
+
+        userId?.let { userId ->
+            firebaseDatabase.child("User").child(userId).setValue(user)
+        }
+    }
+
+
+    private fun updateUi(user: FirebaseUser?) {
+        context.startActivity(Intent(context, MainActivity::class.java))
+        if (context is Activity) {
+            context.finish() }
     }
 
     fun logout(){
@@ -100,6 +187,9 @@ class FirebaseAuthManager(private val context: Context) {
             }
 
     }
+
+
+
 
 
 

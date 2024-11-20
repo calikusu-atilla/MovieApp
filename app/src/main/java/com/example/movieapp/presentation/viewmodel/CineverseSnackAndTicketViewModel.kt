@@ -22,6 +22,9 @@ class CineverseSnackAndTicketViewModel @Inject constructor(private val firebaseD
     private val _selectedSnacks = MutableLiveData<MutableList<CineverseFoodModel>>(mutableListOf())
     val selectedSnacks: LiveData<MutableList<CineverseFoodModel>> = _selectedSnacks
 
+    private val _snacksListTotalPrice = MutableLiveData<Double>()
+    val snacksListTotalPrice: LiveData<Double> get() = _snacksListTotalPrice
+
 
     // Firebase'den "Foodlist" referansına giderek yemek listesini yükler.
     fun loadFoodList() {
@@ -63,4 +66,14 @@ class CineverseSnackAndTicketViewModel @Inject constructor(private val firebaseD
         currentList.remove(snack)
         _selectedSnacks.value = currentList
     }
+
+    fun snackListTotalPrice (price: Double) {
+
+        _snacksListTotalPrice.value = price
+    }
+
+    fun totalAmount (tAmount: Double) {
+        val tAmount = (_snacksListTotalPrice.value ?: 0.0)
+    }
+
 }

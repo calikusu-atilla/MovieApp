@@ -25,6 +25,7 @@ class SnackAndTicketActivityActivity : BaseActivity() {
     private lateinit var movie: CineverseModel
     private val viewModel: CineverseSnackAndTicketViewModel by viewModels()
     private var totalPrice: Double = 0.0
+    private var totalAmount: Double = 0.0
     private var seatCount: Int = 0
     private var selectedSeats: String? = null
     private var selectedTime: String? = null
@@ -58,6 +59,17 @@ class SnackAndTicketActivityActivity : BaseActivity() {
         binding.seatCount.text = seatCount.toString()
         binding.totalPriceTxt.text = totalPrice.toString()
         binding.convenienceFeesPriceTxt.text = convenienceFees.toString()
+
+        viewModel.snacksListTotalPrice.observe(this) { snacksTotalPrice ->
+            binding.snacksTotalPrice.text = "$$snacksTotalPrice"
+
+        }
+
+        viewModel.snacksListTotalPrice.observe(this) {snacksTotalPrice ->
+            totalAmount = (snacksTotalPrice + convenienceFees + totalPrice)
+            binding.totalAmount.text = totalAmount.toString()
+        }
+
 
         setupBlurView()
     }

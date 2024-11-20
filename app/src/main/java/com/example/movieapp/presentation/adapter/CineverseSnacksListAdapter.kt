@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.databinding.CineverseSnackslistViewholderBinding
 import com.example.movieapp.domain.model.CineverseFoodModel
-
+import com.example.movieapp.presentation.viewmodel.CineverseSnackAndTicketViewModel
 
 
 class CineverseSnacksListAdapter(private val selectedSnacksList: MutableList<CineverseFoodModel>) : RecyclerView.Adapter<CineverseSnacksListAdapter.CineverseSnacksListViewHolder>() {
@@ -15,7 +15,7 @@ class CineverseSnacksListAdapter(private val selectedSnacksList: MutableList<Cin
     fun updateSnacksList(newSnacksList: List<CineverseFoodModel>) {
         selectedSnacksList.clear()
         selectedSnacksList.addAll(newSnacksList)
-        //notifyDataSetChanged()
+        notifyDataSetChanged()
     }
 
     inner class CineverseSnacksListViewHolder(val binding: CineverseSnackslistViewholderBinding) : RecyclerView.ViewHolder(binding.root)
@@ -36,10 +36,12 @@ class CineverseSnacksListAdapter(private val selectedSnacksList: MutableList<Cin
         holder.binding.snacksRemoveBtn.setOnClickListener {
             selectedSnacksList.removeAt(position)
             notifyItemRemoved(position)
+            notifyDataSetChanged()
         }
+
+
     }
 
     override fun getItemCount(): Int = selectedSnacksList.size
-
 
 }

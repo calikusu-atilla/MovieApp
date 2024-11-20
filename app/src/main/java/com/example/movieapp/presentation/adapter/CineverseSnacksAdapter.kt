@@ -45,6 +45,8 @@ class CineverseSnacksAdapter(
                     snack.quantity = 1
                     snacksCountTxt.text = snack.quantity.toString()
                     viewModel.updateSnackQuantity(snack, snack.quantity)
+                    viewModel.snackListTotalPrice(calculateTotalPrice())
+
                 }
 
                 increaseBtn.setOnClickListener {
@@ -52,6 +54,7 @@ class CineverseSnacksAdapter(
                         snack.quantity++
                         snacksCountTxt.text = snack.quantity.toString()
                         viewModel.updateSnackQuantity(snack, snack.quantity)
+                        viewModel.snackListTotalPrice(calculateTotalPrice())
                     }
                 }
 
@@ -60,13 +63,20 @@ class CineverseSnacksAdapter(
                         snack.quantity--
                         snacksCountTxt.text = snack.quantity.toString()
                         viewModel.updateSnackQuantity(snack, snack.quantity)
+                        viewModel.snackListTotalPrice(calculateTotalPrice())
                     } else {
                         viewModel.removeSnack(snack)
                         addBtn.visibility = View.VISIBLE
                         quantityLayout.visibility = View.GONE
+                        viewModel.snackListTotalPrice(calculateTotalPrice())
                     }
                 }
             }
         }
     }
+
+    private fun calculateTotalPrice(): Double {
+        return foodlist.filter { it.quantity >= 1 }.sumOf { it.foodPrice * it.quantity }
+    }
 }
+

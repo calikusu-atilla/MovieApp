@@ -16,9 +16,7 @@ class CineverseSeatListAdapter(private val seatList:List<CineverseSeatModel>,
         private val selectedSeatName = ArrayList<String>()
 
 
-    class CineverseSeatViewholder(val binding: CineverseSeatViewholderBinding): RecyclerView.ViewHolder(binding.root) {
-
-    }
+    class CineverseSeatViewholder(val binding: CineverseSeatViewholderBinding): RecyclerView.ViewHolder(binding.root) {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CineverseSeatViewholder {
         return CineverseSeatViewholder(CineverseSeatViewholderBinding.inflate(LayoutInflater.from(parent.context),parent,false))
@@ -54,10 +52,14 @@ class CineverseSeatListAdapter(private val seatList:List<CineverseSeatModel>,
                 }
                 CineverseSeatModel.SeatStatus.SELECTED ->{
                     seat.status = CineverseSeatModel.SeatStatus.AVAILABLE
+
                     selectedSeatName.remove(seat.name)
                     notifyItemChanged(position)
                 }else -> {}
+
             }
+
+
             val selected = selectedSeatName.joinToString ( ",")
             selectedSeat.Retrun(selected,selectedSeatName.size)
         }

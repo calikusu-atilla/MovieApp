@@ -22,7 +22,7 @@ class LoginActivity : BaseActivity() {
         val view = binding.root
         setContentView(view)
 
-        authViewModel.authState.observe(this, Observer { isAuthenticated ->
+         authViewModel.authState.observe(this, Observer { isAuthenticated ->
             if (isAuthenticated) {
                 val intent = Intent (this@LoginActivity,MainActivity::class.java)
                 startActivity(intent) //Kullanıcı giriş yaptı bu aşamada
@@ -30,6 +30,7 @@ class LoginActivity : BaseActivity() {
 
             }
         })
+
 
         authViewModel.authError.observe(this, Observer { error ->
             error?.let {
@@ -42,13 +43,8 @@ class LoginActivity : BaseActivity() {
             val password = binding.passwordTxt.text.toString().trim()
 
             // Email ve şifre kontrolü
-            if (email.isEmpty()) {
-                Toast.makeText(this, "Lütfen email adresinizi girin", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            if (password.isEmpty()) {
-                Toast.makeText(this, "Lütfen şifrenizi girin", Toast.LENGTH_SHORT).show()
+            if (email.isEmpty()  || password.isEmpty()) {
+                Toast.makeText(this, "Please Fill All Details", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -58,7 +54,7 @@ class LoginActivity : BaseActivity() {
 
 
         binding.registerTxt.setOnClickListener {
-            val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
+            val intent = Intent(this@LoginActivity, SingUpActivity::class.java)
             startActivity(intent)
             finish()
         }

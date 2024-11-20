@@ -31,8 +31,8 @@ class AuthViewModel(private val authRepository: AuthRepositoryInterFace): ViewMo
     }
 
 
-    fun register (email: String,password: String){
-        authRepository.register(email,password){ success, error ->
+    fun register (userName: String, email: String, password: String, confirmPassword: String){
+        authRepository.register(userName,email,password,confirmPassword){ success, error ->
             if (success){
                 _authState.postValue(true)
             }else{

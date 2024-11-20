@@ -21,7 +21,7 @@ interface AuthRepositoryInterFace {
     // Kullanıcı kaydı oluşturur.
     // 'email' ve 'password' kayıt bilgilerini alır.
     // 'callback' bir sonuç döndürür: başarı durumu (Boolean) ve hata mesajı (String?)
-    fun register(email: String,password: String, callback: (Boolean, String?) -> Unit)
+    fun register(userName: String, email: String, password: String, confirmPassword: String , callback: (Boolean, String?) -> Unit)
 
     // Şu anki oturum açmış kullanıcıyı alır.
     // 'FirebaseUser?' tipi döner: oturum açmış kullanıcı nesnesi veya null.

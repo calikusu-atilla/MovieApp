@@ -5,6 +5,7 @@ import com.example.movieapp.domain.repository.AuthRepositoryInterFace
 import com.google.firebase.auth.FirebaseUser
 
 class AuthRepository(private val firebaseAuthManager:FirebaseAuthManager) : AuthRepositoryInterFace {
+
     override fun login(email: String, password: String, callback: (Boolean, String?) -> Unit) {
         firebaseAuthManager.login(email,password,callback)
     }
@@ -13,8 +14,9 @@ class AuthRepository(private val firebaseAuthManager:FirebaseAuthManager) : Auth
         firebaseAuthManager.resetPassword(email,callback)
     }
 
-    override fun register(email: String, password: String, callback: (Boolean, String?) -> Unit) {
-        firebaseAuthManager.register(email, password, callback)
+    override fun register(userName: String, email: String, password: String, confirmPassword: String, callback: (Boolean, String?) -> Unit) {
+        firebaseAuthManager.register(userName, email, password, confirmPassword,  callback)
+
     }
 
     override fun getCurrentUser(): FirebaseUser? {

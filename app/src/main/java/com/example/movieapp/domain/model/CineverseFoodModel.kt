@@ -11,7 +11,8 @@ data class CineverseFoodModel(
     var foodName: String = "",
     var foodPrice: Double = 0.0,
     var foodPic: String = "",
-    var quantity: Int =1 ,
+    var totalPrice: Double ?= null,
+    var quantity: Int =0 ,
 
 ): Parcelable {
     constructor(parcel: Parcel) : this(
@@ -19,6 +20,7 @@ data class CineverseFoodModel(
         parcel.readString().toString(),
         parcel.readDouble(),
         parcel.readString().toString(),
+        parcel.readValue(Double::class.java.classLoader) as? Double,
         parcel.readInt()
     ) {
     }
@@ -28,6 +30,7 @@ data class CineverseFoodModel(
         parcel.writeString(foodName)
         parcel.writeDouble(foodPrice)
         parcel.writeString(foodPic)
+        parcel.writeValue(totalPrice)
         parcel.writeInt(quantity)
     }
 
