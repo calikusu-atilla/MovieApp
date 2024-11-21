@@ -2,6 +2,7 @@ package com.example.movieapp.data.dependencyInjection
 
 import android.content.Context
 import androidx.room.Room
+import com.example.movieapp.R
 import com.example.movieapp.data.local.dao.CartDao
 import com.example.movieapp.data.local.database.CartDatabase
 import com.example.movieapp.data.remote.MovieAPI
@@ -18,6 +19,9 @@ import com.example.movieapp.domain.repository.TredingMoviesRepository
 import com.example.movieapp.domain.repository.UpcomingMoviesRepository
 import com.example.movieapp.util.Constants.BASE_URL
 import com.example.movieapp.util.Constants.BASE_URL_TMDB
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.database.FirebaseDatabase
 import dagger.Module
 import dagger.Provides

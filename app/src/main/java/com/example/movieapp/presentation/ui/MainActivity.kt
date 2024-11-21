@@ -82,20 +82,19 @@ class MainActivity : BaseActivity() {
         Log.d("MainActivity", "2")
         viewModel.loadUpcomingMovies(2)
 
-
     }
 
     private fun checkCunrentUser() {
         val currentUser = authViewModel.getCurrentUser()
         if (currentUser == null) {
-            Log.d("MainActivity", "Kullanıcı oturum açmamış.")
-            Toast.makeText(this,"Kullanıcı oturum açmamış. Lütfen giriş yapın. ",Toast.LENGTH_LONG).show()
+            Log.d("ProfilActivity", "Kullanıcı oturum açmamış.")
+            Toast.makeText(this, "Kullanıcı oturum açmamış. Lütfen giriş yapın.", Toast.LENGTH_LONG).show()
 
-            val intent = Intent(this@MainActivity,LoginActivity::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
 
-        } else {
+        }else {
             Log.d("MainActivity", "Kullanıcı oturum açmış durumda: ${currentUser.email}")
         }
     }

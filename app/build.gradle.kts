@@ -82,12 +82,13 @@ dependencies {
     implementation("com.tbuonomo:dotsindicator:5.0")
 
     //FireBase
-    implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
+    implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
     implementation("com.google.firebase:firebase-analytics-ktx")
     implementation("com.google.firebase:firebase-firestore-ktx")
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-storage-ktx")
     implementation("com.google.firebase:firebase-database-ktx")
+    implementation ("com.google.android.gms:play-services-auth:21.2.0")
 
     //Lifecycle
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")

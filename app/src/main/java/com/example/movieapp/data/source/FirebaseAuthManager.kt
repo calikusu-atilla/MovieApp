@@ -16,7 +16,6 @@ import com.google.firebase.database.database
 
 class FirebaseAuthManager(private val context: Context) {
 
-
     private val auth: FirebaseAuth = FirebaseAuth.getInstance() //Firebase Auth işlemleri tanımlanıyor
     private val firebaseDatabase : DatabaseReference = Firebase.database.reference
 
@@ -25,48 +24,16 @@ class FirebaseAuthManager(private val context: Context) {
         if (userName.isBlank() || email.isBlank() || password.isBlank() || confirmPassword.isBlank()) {
             Toast.makeText(context, "Please fill all details",Toast.LENGTH_SHORT).show()
         }else{
-            createAccount(userName, email, password, confirmPassword)
+            createAccount(userName, email, password, confirmPassword, callback)
         }
-
-     /*
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val user = auth.currentUser
-                    if (user != null) {
-                        user.sendEmailVerification()
-                            .addOnCompleteListener { verifyTask ->
-                                if (verifyTask.isSuccessful) {
-                                    // Doğrulama e-postası gönderildi.
-                                    Toast.makeText(context, "Doğrulama e-postası gönderildi. Lütfen e-postanızı kontrol edin.", Toast.LENGTH_LONG).show()
-                                    auth.signOut() // Kullanıcıyı çıkarmak için
-                                    callback(true, null)
-                                } else {
-                                    // Doğrulama e-postası gönderilemedi.
-                                    Toast.makeText(context, "Doğrulama e-postası gönderilemedi.", Toast.LENGTH_SHORT).show()
-                                    callback(false, verifyTask.exception?.message)
-                                }
-                            }
-                    } else {
-                        // Kullanıcı mevcut değilse
-                        Toast.makeText(context, "Kullanıcı oluşturulamadı.", Toast.LENGTH_SHORT).show()
-                        callback(false, "Kullanıcı mevcut değil.")
-                    }
-                } else {
-                    // Kayıt işlemi başarısız
-                    Log.e("FirebaseAuthManager", "Register failed: ${task.exception?.message}")
-                    callback(false, task.exception?.message)
-                }
-            }
-
-      */
     }
 
-    private fun createAccount(userName: String, email: String, password: String, confirmPassword: String) {
+    private fun createAccount(userName: String, email: String, password: String, confirmPassword: String, callback: (Boolean, String?) -> Unit) {
         auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 saveUserData(userName,email,password,confirmPassword)
                 Toast.makeText(context,"Account created successfully", Toast.LENGTH_SHORT).show()
+                sendEmailVerification(callback)
                 val intent = Intent(context, LoginActivity::class.java)
                 context.startActivity(intent)
                 if (context is Activity) {
@@ -75,9 +42,11 @@ class FirebaseAuthManager(private val context: Context) {
             }else {
                 Toast.makeText(context,"Account Creation Fail", Toast.LENGTH_SHORT).show()
                 Log.d("Account", "createAccount: Failure", task.exception)
+                callback(false, task.exception?.message)
             }
         }
     }
+
 
     //save data in to database
     private fun saveUserData(userName: String, email: String, password: String, confirmPassword: String) {
@@ -91,59 +60,40 @@ class FirebaseAuthManager(private val context: Context) {
         }
     }
 
-
-
     fun login(email: String, password: String, callback: (Boolean, String?) -> Unit) {
 
         if (email.isBlank() || password.isBlank()){
             Toast.makeText(context,"Please fill all details", Toast.LENGTH_SHORT).show()
         }else {
-            createUserAccount(email,password)
+            createUserAccount(email,password,callback)
         }
-
-        /*
-        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-                val user = auth.currentUser
-                if (user?.isEmailVerified == true)
-
-                // E-posta doğrulanmış
-
-                    if (task.isSuccessful) { // Eğer giriş işlemi başarılı olursa callback fonksiyonunu çağırarak başarı durumunu true ve hata mesajı null döner.
-                        Log.d("FirebaseAuthManager", "Login successful")
-                        callback(true, null)
-                    } else {
-                        //Giriş başarısız
-                        Log.e("FirebaseAuthManager", "Login failed: ${task.exception?.message}")
-                        callback(false, task.exception?.message)
-                    } else {
-                    //E-posta doğrulanmamış
-                    Toast.makeText(
-                        context,
-                        "E-posta adresiniz doğrulanmamış.Lütfen e- postanızı kontrol edin. ",
-                        Toast.LENGTH_LONG
-                    ).show()
-                    auth.signOut()
-                    callback(false, "E-posta doğrulanmamış")
-                }
-            }
-
-         */
     }
 
-    private fun createUserAccount(email: String, password: String) {
+    private fun createUserAccount(email: String, password: String, callback: (Boolean, String?) -> Unit) {
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if (task.isSuccessful){
                 val user = auth.currentUser
-                updateUi(user)
+                if (user?.isEmailVerified == true) {
+                    updateUi(user)
+                    callback(true,null)
+                }else {
+                    Toast.makeText(context, "E-posta adresiniz doğrulanmamış. Lütfen e-postanızı kontrol edin.", Toast.LENGTH_LONG).show()
+                    auth.signOut() // Doğrulama yapılmamışsa oturumu kapat
+                    callback(false, "E-posta doğrulanmamış")
+                }
             }else {
                 auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener{ task ->
                     if (task.isSuccessful){
-                        val user = auth.currentUser
+                        val newUser = auth.currentUser
                         loginsaveUserData(email,password)
-                        updateUi(user)
+                        Toast.makeText(context,"Account created successfully", Toast.LENGTH_SHORT).show()
+                        sendEmailVerification(callback)
+                        updateUi(newUser)
+                        callback(true, null)
                     }else {
                         Toast.makeText(context,"Authentication faile", Toast.LENGTH_SHORT).show()
                         Log.d("Account","createUserAccount: Authentication failed", task.exception)
+                        callback(false,task.exception?.message)
                     }
                 }
             }
@@ -159,7 +109,6 @@ class FirebaseAuthManager(private val context: Context) {
         }
     }
 
-
     private fun updateUi(user: FirebaseUser?) {
         context.startActivity(Intent(context, MainActivity::class.java))
         if (context is Activity) {
@@ -168,6 +117,7 @@ class FirebaseAuthManager(private val context: Context) {
 
     fun logout(){
         auth.signOut() //logout fonksiyonu mevcut kullanıcıdan çıkış yapar
+        Toast.makeText(context, "Logged out successfully", Toast.LENGTH_SHORT).show()
     }
 
     fun getCurrentUser(): FirebaseUser? {
@@ -188,19 +138,22 @@ class FirebaseAuthManager(private val context: Context) {
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    fun sendEmailVerification(callback: (Boolean, String?) -> Unit) {
+        val user = auth.currentUser
+        if (user != null) {
+            user.sendEmailVerification().addOnCompleteListener { verifyTask ->
+                if (verifyTask.isSuccessful) {
+                    Log.d("FirebaseAuthManager", "Verification email sent successfully.")
+                    callback(true, null)
+                    auth.signOut()
+                } else {
+                    Log.e("FirebaseAuthManager", "Failed to send verification email: ${verifyTask.exception?.message}")
+                    callback(false, verifyTask.exception?.message)
+                }
+            }
+        } else {
+            Log.e("FirebaseAuthManager", "No user is logged in.")
+            callback(false, "No user is logged in.")
+        }
+    }
 }
