@@ -1,5 +1,6 @@
 package com.example.movieapp.domain.repository
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.auth.FirebaseUser
 
 
@@ -33,6 +34,11 @@ interface AuthRepositoryInterFace {
     // Kullanıcının giriş yapıp yapmadığını kontrol eder.
     // Boolean döner: kullanıcı giriş yapmış mı (true) veya yapmamış mı (false).
     fun isUserLoggedIn(): Boolean
+
+    // Google oturum açma işlemini başlatır ve sonuç döner.
+    // 'GoogleSignInAccount' ve hata mesajı için bir callback alır.
+    fun loginWithGoogle(account: GoogleSignInAccount, callback: (Boolean, String?) -> Unit)
+
 
 
 }

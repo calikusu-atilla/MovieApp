@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
+import com.example.movieapp.R
 import com.example.movieapp.databinding.ActivityCineverseBinding
 import com.example.movieapp.domain.model.CineverseModel
 import com.example.movieapp.presentation.adapter.CineverseSliderAdapter
@@ -30,16 +31,14 @@ class CineverseActivity : BaseActivity() {
         binding.viewPagerCineverseSlider.setCurrentItem(binding.viewPagerCineverseSlider.currentItem + 1)
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCineverseBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
-
         initCineverseSlider()
-
+        bottomNavigation()
 
     }
 
@@ -130,6 +129,29 @@ class CineverseActivity : BaseActivity() {
     override fun onDestroy() {
         super.onDestroy()
         sliderHandler.removeCallbacksAndMessages(null)
+    }
+
+    private fun bottomNavigation() {
+
+        binding.chipNavigationBar.setOnItemSelectedListener { id ->
+            when(id) {
+                R.id.ticket -> {
+                    val intent = Intent (this, CineverseTicketListActivity::class.java)
+                    startActivity(intent) }
+                R.id.home -> {
+                    val intent = Intent (this, CineverseActivity::class.java)
+                    startActivity(intent) }
+                R.id.movie -> {
+                    val intent = Intent ( this, MainActivity::class.java)
+                    startActivity(intent) }
+                R.id.search -> {
+
+                }
+                else  -> {
+
+                }
+            }
+        }
     }
 
     private fun setupBlurView() {

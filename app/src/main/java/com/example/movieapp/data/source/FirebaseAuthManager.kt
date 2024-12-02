@@ -8,9 +8,12 @@ import android.widget.Toast
 import com.example.movieapp.domain.model.UserModel
 import com.example.movieapp.presentation.ui.LoginActivity
 import com.example.movieapp.presentation.ui.MainActivity
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.database
 
@@ -18,6 +21,33 @@ class FirebaseAuthManager(private val context: Context) {
 
     private val auth: FirebaseAuth = FirebaseAuth.getInstance() //Firebase Auth işlemleri tanımlanıyor
     private val firebaseDatabase : DatabaseReference = Firebase.database.reference
+
+
+    fun loginWithGoogle(googleSignInAccount: GoogleSignInAccount, callback: (Boolean, String?) -> Unit) {
+        val credential = GoogleAuthProvider.getCredential(googleSignInAccount.idToken, null)
+        auth.signInWithCredential(credential).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val user = auth.currentUser
+                user?.let {
+                    saveGoogleUserData(it.displayName ?: "Unknown", it.email ?: "", "")
+                    updateUi(it)
+                    callback(true, null)
+                } ?: callback(false, "Firebase user is null")
+            } else {
+                Toast.makeText(context, "Account Creation Fail", Toast.LENGTH_SHORT).show()
+                Log.d("Account", "Google Sign-In Failure", task.exception)
+                callback(false, task.exception?.message)
+            }
+        }
+    }
+
+
+    private fun saveGoogleUserData(userName: String, email: String, password: String) {
+        val user = UserModel(userName, email, password)
+        val userId = auth.currentUser?.uid ?: return
+        firebaseDatabase.child("User").child(userId).setValue(user)
+    }
+
 
     fun register(userName: String, email: String, password: String, confirmPassword: String, callback: (Boolean, String?) -> Unit) {
 

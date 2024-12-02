@@ -15,11 +15,10 @@ import com.example.movieapp.util.downloadFromUrl
 import com.example.movieapp.util.placeholderProgressBar
 
 class TopMoviesAdapter(val topMovies: List<TopMoviesModel>):RecyclerView.Adapter<TopMoviesAdapter.TopMoviesViewholder>() {
+
     private var context : android.content.Context? = null
 
     class TopMoviesViewholder(val binding: TopmoviesViewholderBinding):RecyclerView.ViewHolder(binding.root)
-
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopMoviesViewholder {
         context = parent.context

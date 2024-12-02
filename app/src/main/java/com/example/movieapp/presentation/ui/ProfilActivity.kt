@@ -61,6 +61,7 @@ class ProfilActivity : BaseActivity() {
     }
 
     private fun bottomNavigation() {
+        binding.cineverseBtn.setOnClickListener { startActivity(Intent(this@ProfilActivity,CineverseActivity::class.java)) }
         binding.profilBtn.setOnClickListener { startActivity(Intent(this@ProfilActivity, ProfilActivity::class.java)) }
         binding.mainBtn.setOnClickListener { startActivity(Intent(this@ProfilActivity, MainActivity::class.java)) }
         binding.logOutBtn.setOnClickListener { logOutUser() }

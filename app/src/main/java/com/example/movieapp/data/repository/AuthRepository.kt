@@ -2,6 +2,7 @@ package com.example.movieapp.data.repository
 
 import com.example.movieapp.data.source.FirebaseAuthManager
 import com.example.movieapp.domain.repository.AuthRepositoryInterFace
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.auth.FirebaseUser
 
 class AuthRepository(private val firebaseAuthManager:FirebaseAuthManager) : AuthRepositoryInterFace {
@@ -29,6 +30,10 @@ class AuthRepository(private val firebaseAuthManager:FirebaseAuthManager) : Auth
 
     override fun isUserLoggedIn(): Boolean {
         return firebaseAuthManager.getCurrentUser() != null
+    }
+
+    override fun loginWithGoogle(account: GoogleSignInAccount, callback: (Boolean, String?) -> Unit) {
+        firebaseAuthManager.loginWithGoogle(account, callback)
     }
 
 

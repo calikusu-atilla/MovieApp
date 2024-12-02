@@ -85,8 +85,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:text="chapter"
-                        android:textColor="@color/Primary_Normal"
-                        android:textSize="16sp" />
+                        android:textColor="@color/medium_light_gray"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
                 </LinearLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -123,7 +124,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:text="0"
-                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textColor="@color/medium_light_gray"
                         android:textSize="14sp"
                         app:layout_constraintStart_toStartOf="@id/textView20"
                         app:layout_constraintTop_toBottomOf="@+id/textView20" />
@@ -146,7 +148,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:text="0"
-                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textColor="@color/medium_light_gray"
                         android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="@id/textView21"
                         app:layout_constraintTop_toBottomOf="@+id/textView21" />
@@ -169,7 +172,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:text="Salon 1"
-                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textColor="@color/medium_light_gray"
                         android:textSize="14sp"
                         app:layout_constraintStart_toStartOf="@+id/textView24"
                         app:layout_constraintTop_toBottomOf="@+id/textView24" />
@@ -192,7 +196,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:text="A4"
-                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textColor="@color/medium_light_gray"
                         android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="@id/textView25"
                         app:layout_constraintTop_toBottomOf="@+id/textView25" />
@@ -302,6 +307,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/medium_light_gray"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -311,6 +319,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:text="Tickets"
+                            android:textColor="@color/medium_light_gray"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="@+id/seatCount"
                             app:layout_constraintStart_toEndOf="@+id/seatCount"
                             app:layout_constraintTop_toTopOf="@+id/seatCount" />
@@ -320,6 +331,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/medium_light_gray"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -328,7 +342,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
                             android:text="Convenience Fees"
+                            android:textColor="@color/medium_light_gray"
                             app:layout_constraintStart_toStartOf="@+id/seatCount"
                             app:layout_constraintTop_toBottomOf="@+id/seatCount" />
 
@@ -338,6 +355,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:text="TextView"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/medium_light_gray"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/totalPriceTxt" />
 
@@ -370,6 +390,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="0"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/medium_light_gray"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/view9" />
 
@@ -433,6 +456,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/medium_light_gray"
                             android:text="$0"
                             app:layout_constraintEnd_toEndOf="@+id/view12"
                             app:layout_constraintTop_toBottomOf="@+id/view12" />

@@ -11,6 +11,7 @@ data class CineverseModel(
     var year: String = "",
     var time: String = "",
     var Imdb: String = "",
+    var chapter: String = "",
     var trailer: String = "",
     var description: String ="",
     var casts: ArrayList<CineverseCastModel> = ArrayList(),
@@ -19,6 +20,7 @@ data class CineverseModel(
 
 ):Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readString().toString(),
@@ -41,6 +43,7 @@ data class CineverseModel(
         parcel.writeString(year)
         parcel.writeString(time)
         parcel.writeString(Imdb)
+        parcel.writeString(chapter)
         parcel.writeString(trailer)
         parcel.writeString(description)
         parcel.writeTypedList(casts)

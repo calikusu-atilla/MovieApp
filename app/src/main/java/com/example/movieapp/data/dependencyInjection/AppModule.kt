@@ -22,7 +22,11 @@ import com.example.movieapp.util.Constants.BASE_URL_TMDB
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.database
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -43,6 +47,16 @@ object AppModule {
         return FirebaseDatabase.getInstance()
     }
 
+    @Provides
+    @Singleton
+    fun provideFirebaseDatabaseReference(): DatabaseReference = Firebase.database.reference
+
+
+    @Provides
+    @Singleton
+    fun provideFirebaseAuth(): FirebaseAuth {
+        return FirebaseAuth.getInstance()
+    }
 
     // Retrofit kullanarak MovieAPI örneği sağlayan fonksiyon.
     // Bu fonksiyon, Singleton (tekil) bir bileşen sağlar.

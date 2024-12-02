@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.movieapp.domain.repository.AuthRepositoryInterFace
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.auth.FirebaseUser
 
 class AuthViewModel(private val authRepository: AuthRepositoryInterFace): ViewModel() {
@@ -57,6 +58,18 @@ class AuthViewModel(private val authRepository: AuthRepositoryInterFace): ViewMo
     fun getCurrentUser(): FirebaseUser?{
         return authRepository.getCurrentUser()
     }
+
+    fun loginWithGoogle(account: GoogleSignInAccount) {
+        authRepository.loginWithGoogle(account) { success, error ->
+            if (success) {
+                _authState.postValue(true)
+            } else {
+                _authState.postValue(false)
+                _authError.postValue(error)
+            }
+        }
+    }
+
 
 
 }

@@ -1,6 +1,7 @@
 package com.example.movieapp.presentation.ui
 
 import CineverseSnacksAdapter
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -44,15 +45,20 @@ class SnackAndTicketActivityActivity : BaseActivity() {
     }
 
     private fun setVeriable() {
-        getIntentExtra()
 
-        val requestOptions = RequestOptions().transform(CenterCrop(), GranularRoundedCorners(0f, 0f, 100f, 100f))
+        setupBlurView()
+        getIntentExtra()
+        bottomNavigation()
+
+        val requestOptions = RequestOptions().transform(GranularRoundedCorners(0f, 0f, 100f, 100f))
         Glide.with(this)
             .load(movie.image)
+            .centerInside()
             .apply(requestOptions)
             .into(binding.filmPic)
 
         binding.nameTxt.text = movie.name
+        binding.chapterTxt.text = movie.chapter
         binding.seatsTxt.text = selectedSeats ?: "Seçilen Koltuk Yok"
         binding.dateTxt.text = selectedDate
         binding.timeTxt.text = selectedTime
@@ -70,9 +76,30 @@ class SnackAndTicketActivityActivity : BaseActivity() {
             binding.totalAmount.text = totalAmount.toString()
         }
 
+        binding.bookTicketsBtn.setOnClickListener {
 
-        setupBlurView()
+            viewModel.ticketSave(
+                movie = movie.name, movieScreen = movie.chapter, date = selectedDate ?: "",
+                time = selectedTime ?: "", seats = selectedSeats ?: "", totalPrice = totalAmount,
+                picUrl = movie.image
+            )
+
+            viewModel.ticketId.observe(this) { ticketId ->
+                if (ticketId !=null) {
+                    val intent = Intent(this@SnackAndTicketActivityActivity, CinemaTicketDetailActivity::class.java)
+                    intent.putExtra("seatMovie", movie)
+                    intent.putExtra("selectedDate", selectedDate)
+                    intent.putExtra("selectedTime", selectedTime)
+                    intent.putExtra("seats", selectedSeats)
+                    intent.putExtra("ticketId", ticketId)
+                    startActivity(intent)
+                }
+            }
+
+        }
     }
+
+
 
     private fun initSnacks() {
         binding.progressBarSnacks.visibility = View.VISIBLE
@@ -98,6 +125,14 @@ class SnackAndTicketActivityActivity : BaseActivity() {
 
         viewModel.selectedSnacks.observe(this) {selectedSnacksList ->
             adapter.updateSnacksList(selectedSnacksList)
+
+            if (selectedSnacksList.isNullOrEmpty()) {
+                totalAmount = 0.0
+            }else {
+                val snacksTotalPrice = selectedSnacksList.sumOf { it.foodPrice * it.quantity }
+                totalAmount = (snacksTotalPrice + convenienceFees + totalPrice)
+            }
+            binding.totalAmount.text = totalAmount.toString()
         }
     }
 
@@ -122,5 +157,9 @@ class SnackAndTicketActivityActivity : BaseActivity() {
 
         binding.blurView.setOutlineProvider(ViewOutlineProvider.BACKGROUND)
         binding.blurView.clipToOutline = true
+    }
+
+    private fun bottomNavigation() {
+        //startActivity(Intent(this@SnackAndTicketActivityActivity, CinemaTicketDetailActivity::class.java))
     }
 }
