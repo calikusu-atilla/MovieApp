@@ -7,8 +7,8 @@ import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.R
 import com.example.movieapp.databinding.ActivityCineverseTicketListBinding
-import com.example.movieapp.domain.model.TicketModel
-import com.example.movieapp.presentation.adapter.CineverseTicketListAdapter
+import com.example.movieapp.presentation.adapter.CineverseExpiredTicketsAdapter
+import com.example.movieapp.presentation.adapter.CineverseUpcomingTicketsAdapter
 import com.example.movieapp.presentation.viewmodel.TicketListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,23 +26,35 @@ class CineverseTicketListActivity : BaseActivity() {
         setContentView(view)
 
         bottomNavigation()
-        initTicketList()
+        initUpcomingTickets()
+        initExpiredTickets()
     }
 
-    private fun initTicketList() {
-        binding.ticketListProgressBar.visibility = View.VISIBLE
-        viewModel.ticketlist.observe(this) { ticketlist ->
-            binding.ticketListProgressBar.visibility = View.GONE
-
-            if (!ticketlist.isNullOrEmpty()) {
-                binding.ticketListView.visibility = View.VISIBLE
-                binding.ticketListView.layoutManager = LinearLayoutManager(this@CineverseTicketListActivity, LinearLayoutManager.VERTICAL, false)
-                binding.ticketListView.adapter = CineverseTicketListAdapter (ticketlist)
-            } else {
-                binding.ticketListView.visibility = View.GONE
+    private fun initExpiredTickets() {
+        viewModel.expiredTickets.observe(this) { expiredTickets ->
+            if (!expiredTickets.isNullOrEmpty()) {
+                binding.expiredTicketsView.layoutManager = LinearLayoutManager(this@CineverseTicketListActivity, LinearLayoutManager.VERTICAL, false)
+                binding.expiredTicketsView.adapter = CineverseExpiredTicketsAdapter ( expiredTickets)
             }
         }
-        viewModel.loadTicketList()
+
+        viewModel.expiredTickets()
+    }
+
+    private fun initUpcomingTickets() {
+        binding.upcomingTicketsProgressBar.visibility = View.VISIBLE
+        viewModel.upcomingTickets.observe(this) { upcomingTickets ->
+            binding.upcomingTicketsProgressBar.visibility = View.GONE
+
+            if (!upcomingTickets.isNullOrEmpty()) {
+                binding.upcomingTicketsView.visibility = View.VISIBLE
+                binding.upcomingTicketsView.layoutManager = LinearLayoutManager(this@CineverseTicketListActivity, LinearLayoutManager.VERTICAL, false)
+                binding.upcomingTicketsView.adapter = CineverseUpcomingTicketsAdapter (upcomingTickets)
+            } else {
+                binding.upcomingTicketsView.visibility = View.GONE
+            }
+        }
+        viewModel.upcomingTickets()
     }
 
     private fun bottomNavigation() {

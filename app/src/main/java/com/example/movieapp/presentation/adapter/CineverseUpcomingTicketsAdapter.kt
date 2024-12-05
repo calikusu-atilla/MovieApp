@@ -1,5 +1,6 @@
 package com.example.movieapp.presentation.adapter
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,23 +9,25 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
-import com.example.movieapp.databinding.CineverseTicketViewholderBinding
+import com.example.movieapp.databinding.CineverseUpcomingTicketViewholderBinding
 import com.example.movieapp.domain.model.TicketModel
 import com.example.movieapp.presentation.ui.CinemaTicketDetailActivity
 
-class CineverseTicketListAdapter(private val ticketList: List<TicketModel>):RecyclerView.Adapter<CineverseTicketListAdapter.CineverseTicketViewholder>() {
+class CineverseUpcomingTicketsAdapter(private val ticketList: List<TicketModel>):RecyclerView.Adapter<CineverseUpcomingTicketsAdapter.CineverseUpcomingTicketViewholder>() {
 
     private var context : android.content.Context? = null
 
-    class CineverseTicketViewholder(val binding: CineverseTicketViewholderBinding): RecyclerView.ViewHolder(binding.root)
+    class CineverseUpcomingTicketViewholder(val binding: CineverseUpcomingTicketViewholderBinding): RecyclerView.ViewHolder(binding.root)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CineverseTicketViewholder {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CineverseUpcomingTicketViewholder {
         context = parent.context
-        val binding = CineverseTicketViewholderBinding.inflate(LayoutInflater.from(context),parent,false)
-        return CineverseTicketViewholder(binding)
+        val binding = CineverseUpcomingTicketViewholderBinding.inflate(LayoutInflater.from(context),parent,false)
+        return CineverseUpcomingTicketViewholder(binding)
     }
 
-    override fun onBindViewHolder(holder: CineverseTicketViewholder, position: Int) {
+    @SuppressLint("SetTextI18n")
+    override fun onBindViewHolder(holder: CineverseUpcomingTicketViewholder, position: Int) {
         val ticketItem = ticketList[position]
 
         if (ticketItem != null) {
@@ -39,12 +42,12 @@ class CineverseTicketListAdapter(private val ticketList: List<TicketModel>):Recy
                 timeTxt.text = ticketItem.time
                 movieNameTxt.text = ticketItem.movieName
                 screenTxt.text = ticketItem.movieScreen
-                totalPriceTxt.text = ticketItem.totalPrice.toString()
+                totalPriceTxt.text = "$ ${ticketItem.totalPrice}"
             }
 
             holder.itemView.setOnClickListener {
                 val intent = Intent (holder.itemView.context, CinemaTicketDetailActivity::class.java)
-                intent.putExtra("object",ticketItem)
+                intent.putExtra("ticketObject",ticketItem)
                 holder.itemView.context.startActivity(intent)
             }
         }

@@ -65,8 +65,6 @@ class CinemaTicketDetailActivity : BaseActivity() {
         selectedTime = intent.getStringExtra("selectedTime")
         selectedSeats = intent.getStringExtra("seats")
         ticketId = intent.getStringExtra("ticketId")
-
-
     }
 
     private fun generateBarcode(content: String, width: Int, height: Int ): Bitmap {

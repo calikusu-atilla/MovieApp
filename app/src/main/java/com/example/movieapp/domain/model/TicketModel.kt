@@ -3,6 +3,7 @@ package com.example.movieapp.domain.model
 import android.os.Parcel
 import android.os.Parcelable
 
+
 data class TicketModel (
     var movieName: String? = null,
     var movieScreen: String? = null,
@@ -14,13 +15,13 @@ data class TicketModel (
 
 ): Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.readString().toString(),
-        parcel.readString().toString(),
-        parcel.readString().toString(),
-        parcel.readString().toString(),
-        parcel.readString().toString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
         parcel.readValue(Double::class.java.classLoader) as? Double,
-        parcel.readString().toString()
+        parcel.readString()
     ) {
     }
 

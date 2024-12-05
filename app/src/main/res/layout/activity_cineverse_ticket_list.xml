@@ -54,7 +54,7 @@
                 android:layout_height="match_parent">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/ticketListView"
+                    android:id="@+id/upcomingTicketsView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -63,14 +63,29 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ProgressBar
-                    android:id="@+id/ticketListProgressBar"
+                    android:id="@+id/upcomingTicketsProgressBar"
                     style="?android:attr/progressBarStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/ticketListView"
-                    app:layout_constraintStart_toStartOf="@+id/ticketListView"
-                    app:layout_constraintTop_toTopOf="@+id/ticketListView" />
+                    app:layout_constraintEnd_toEndOf="@+id/upcomingTicketsView"
+                    app:layout_constraintStart_toStartOf="@+id/upcomingTicketsView"
+                    app:layout_constraintTop_toTopOf="@+id/upcomingTicketsView" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/expiredTicketsView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>

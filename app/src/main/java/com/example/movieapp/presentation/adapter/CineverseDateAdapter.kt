@@ -16,9 +16,10 @@ class CineverseDateAdapter(private val timeSlots: List<String>, private val date
 
         fun bind (date: String) {
            val dateParts = date.split("/")
-            if (dateParts.size == 3) {
-                binding.dayTxt.text = dateParts[0]
-                binding.datMonthTxt.text = dateParts[1] + dateParts[2]
+            if (dateParts.size == 4) {
+                binding.dayTxt.text = dateParts[0] //+ dateParts[1]
+                binding.datMonthTxt.text = "${dateParts[1]}/${dateParts[2]}"
+                binding.yearTxt.text = dateParts[3]
 
                 if (selectedPosition == position ){
                     binding.mailLayout.setBackgroundResource(R.drawable.time_and_date_backgraund)

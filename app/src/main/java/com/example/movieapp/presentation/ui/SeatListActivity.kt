@@ -3,6 +3,7 @@ package com.example.movieapp.presentation.ui
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewOutlineProvider
@@ -182,9 +183,11 @@ class SeatListActivity : BaseActivity() {
 
     private fun generateDates(): List<String> {
         val dates = mutableListOf<String>()
-        val today = LocalDate.now()
-        val formatter = DateTimeFormatter.ofPattern("EEE/dd/MMM")
 
+        val formatter = DateTimeFormatter.ofPattern("EEE/dd/MMM/yyyy")
+        val today = LocalDate.now()
+        val formattedDate = today.format(formatter)
+        Log.d("DEBUG", "Formatted Date: $formattedDate")
         for (i in 0 until 7) {
             dates.add(today.plusDays(i.toLong()).format(formatter))
         }

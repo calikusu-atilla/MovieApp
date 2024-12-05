@@ -17,6 +17,12 @@
         android:theme="@style/Theme.MovieApp"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.ui.CineversePaymentOkActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.ui.PaymentOkActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.ui.CineverseTicketListActivity"
             android:exported="false" />
         <activity
