@@ -1,24 +1,15 @@
 package com.example.movieapp.presentation.ui
 
 import android.content.Intent
-import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewOutlineProvider
-import android.widget.ArrayAdapter
-import android.widget.GridLayout
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.movieapp.R
 import com.example.movieapp.databinding.ActivitySeatListBinding
 import com.example.movieapp.domain.model.CineverseModel
 import com.example.movieapp.domain.model.CineverseSeatModel
@@ -146,7 +137,7 @@ class SeatListActivity : BaseActivity() {
 
     private fun navigateToSnackAndTicketActivity(){
 
-        val intent = Intent( this@SeatListActivity, CineversePaymentOkActivity::class.java)
+        val intent = Intent( this@SeatListActivity, SnackAndTicketActivityActivity::class.java)
         intent.putStringArrayListExtra("selectedSeats", ArrayList(selectedSeats))
         intent.putExtra("totalPrice", totalPrice)
         intent.putExtra("seatListMovie", movie)

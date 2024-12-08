@@ -1,11 +1,11 @@
 package com.example.movieapp.presentation.ui
 
 import android.animation.Animator
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import com.airbnb.lottie.LottieAnimationView
 import com.example.movieapp.databinding.ActivityCineversePaymentOkBinding
 import com.example.movieapp.domain.model.CineverseModel
@@ -60,18 +60,23 @@ class CineversePaymentOkActivity : BaseActivity() {
     }
 
     private fun putIntentExtra(){
-        val intent = Intent(this@CineversePaymentOkActivity, CinemaTicketDetailActivity::class.java)
-        intent.putExtra("seatMovie", movie)
-        intent.putExtra("selectedDate", selectedDate)
-        intent.putExtra("selectedTime", selectedTime)
-        intent.putExtra("seats", selectedSeats)
-        intent.putExtra("ticketId", ticketId )
+        if (ticketId !=null) {
+            val intent = Intent(this@CineversePaymentOkActivity, CinemaTicketDetailActivity::class.java)
+            intent.putExtra("seatMovie", movie)
+            intent.putExtra("selectedDate", selectedDate)
+            intent.putExtra("selectedTime", selectedTime)
+            intent.putExtra("seats", selectedSeats)
+            intent.putExtra("ticketId", ticketId )
 
-        Handler(Looper.getMainLooper()).postDelayed({ startActivity(intent) }, 1000)
+            Handler(Looper.getMainLooper()).postDelayed({ startActivity(intent) }, 1000)
+        } else {
+            Log.d("Payment","TicketId null")
+        }
+
     }
 
     private fun getIntentExtra(){
-        movie = intent.getParcelableExtra("seatListMovie")!!
+        movie = intent.getParcelableExtra("seatMovie")!!
         totalPrice = intent.getDoubleExtra("totalPrice", 0.0)
         seatCount = intent.getIntExtra("seatCount", 0)
         selectedSeats = intent.getStringArrayListExtra("selectedSeats").toString()

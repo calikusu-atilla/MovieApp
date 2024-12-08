@@ -93,8 +93,8 @@ class SnackAndTicketActivityActivity : BaseActivity() {
                     intent.putExtra("selectedTime", selectedTime)
                     intent.putExtra("seats", selectedSeats)
                     intent.putExtra("ticketId", ticketId)
+                    startActivity(intent)
                 }
-                startActivity(intent)
             }
         }
     }

@@ -107,7 +107,7 @@ class CineverseDetailActivity : BaseActivity() {
 
         binding.selectSeatsBtn.setOnClickListener {
             val intent = Intent(this@CineverseDetailActivity,SeatListActivity::class.java)
-            intent.putExtra(    "seatMovie", movieDetail)
+            intent.putExtra("seatMovie", movieDetail)
             startActivity(intent)
         }
 

@@ -85,7 +85,7 @@ class CineverseActivity : BaseActivity() {
 
         //setupBlurView()
 
-        binding.viewPagerCineverseSlider.adapter = CineverseSliderAdapter(images,binding.viewPagerCineverseSlider, this)
+        binding.viewPagerCineverseSlider.adapter = CineverseSliderAdapter(images,binding.viewPagerCineverseSlider)
         binding.viewPagerCineverseSlider.clipChildren = false
         binding.viewPagerCineverseSlider.clipToPadding = false
         binding.viewPagerCineverseSlider.offscreenPageLimit = 1
@@ -99,12 +99,11 @@ class CineverseActivity : BaseActivity() {
             })
         }
         binding.viewPagerCineverseSlider.setPageTransformer(compositePageTransformer)
-        binding.viewPagerCineverseSlider.setCurrentItem(binding.viewPagerCineverseSlider.currentItem + 1, true)
+        binding.viewPagerCineverseSlider.currentItem = 1
         binding.viewPagerCineverseSlider.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 sliderHandler.removeCallbacks(sliderRunnable)
-                initCineverse(images[position])
 
                 /*
 
@@ -121,11 +120,11 @@ class CineverseActivity : BaseActivity() {
 
     }
 
-
     override fun onPause() {
         super.onPause()
         sliderHandler.removeCallbacks(sliderRunnable)
     }
+
     override fun onDestroy() {
         super.onDestroy()
         sliderHandler.removeCallbacksAndMessages(null)

@@ -9,9 +9,9 @@ data class CineverseReviewsModel(
     var userscore : String = ""
 ): Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readString()?: ""
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readString().toString()
     ) {
     }
 

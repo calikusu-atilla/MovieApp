@@ -6,10 +6,10 @@ import android.os.Parcelable
 data class CineverseRecommendedModel(
     var picUrl : String = "",
     var name : String = ""
-): Parcelable {
+):Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
+        parcel.readString().toString(),
+        parcel.readString().toString()
     ) {
     }
 

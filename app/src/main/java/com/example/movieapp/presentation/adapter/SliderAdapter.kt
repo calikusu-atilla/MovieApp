@@ -2,7 +2,6 @@ package com.example.movieapp.presentation.adapter
 
 import android.content.Context
 import android.content.Intent
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -47,15 +46,14 @@ class SliderAdapter(
         return SliderViewholder(binding)
     }
 
-    override fun getItemCount(): Int {
-        return sliderItems.size
-    }
+    override fun getItemCount(): Int = sliderItems.size
 
     override fun onBindViewHolder(holder: SliderViewholder, position: Int) {
 
         holder.setImage(sliderItems[position],holder.itemView.context)
         if (position == sliderItems.lastIndex - 1)
             viewPager2.post(runnable)
+
 
         holder.binding.nameTxt.text = sliderItems[position].name
         holder.binding.ageTxt.text = sliderItems[position].age
