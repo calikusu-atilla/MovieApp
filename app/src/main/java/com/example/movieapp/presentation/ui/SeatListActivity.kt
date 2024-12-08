@@ -146,7 +146,7 @@ class SeatListActivity : BaseActivity() {
 
     private fun navigateToSnackAndTicketActivity(){
 
-        val intent = Intent( this@SeatListActivity, SnackAndTicketActivityActivity::class.java)
+        val intent = Intent( this@SeatListActivity, CineversePaymentOkActivity::class.java)
         intent.putStringArrayListExtra("selectedSeats", ArrayList(selectedSeats))
         intent.putExtra("totalPrice", totalPrice)
         intent.putExtra("seatListMovie", movie)

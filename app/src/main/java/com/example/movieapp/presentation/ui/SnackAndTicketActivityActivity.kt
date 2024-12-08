@@ -79,23 +79,23 @@ class SnackAndTicketActivityActivity : BaseActivity() {
         binding.bookTicketsBtn.setOnClickListener {
 
             viewModel.ticketSave(
-                movie = movie.name, movieScreen = movie.chapter, date = selectedDate ?: "",
-                time = selectedTime ?: "", seats = selectedSeats ?: "", totalPrice = totalAmount,
+                movie = movie.name, movieScreen = movie.chapter,
+                date = selectedDate ?: "", time = selectedTime ?: "",
+                seats = selectedSeats ?: "", totalPrice = totalAmount,
                 picUrl = movie.image
             )
 
             viewModel.ticketId.observe(this) { ticketId ->
                 if (ticketId !=null) {
-                    val intent = Intent(this@SnackAndTicketActivityActivity, CinemaTicketDetailActivity::class.java)
+                    val intent = Intent(this@SnackAndTicketActivityActivity, CineversePaymentOkActivity::class.java)
                     intent.putExtra("seatMovie", movie)
                     intent.putExtra("selectedDate", selectedDate)
                     intent.putExtra("selectedTime", selectedTime)
                     intent.putExtra("seats", selectedSeats)
                     intent.putExtra("ticketId", ticketId)
-                    startActivity(intent)
                 }
+                startActivity(intent)
             }
-
         }
     }
 
