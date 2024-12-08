@@ -11,6 +11,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.movieapp.R
 import com.example.movieapp.databinding.ActivityCinemaTicketDetailBinding
 import com.example.movieapp.domain.model.CineverseModel
+import com.example.movieapp.presentation.fragment.CineverseHomeFragment
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.common.BitMatrix
@@ -31,6 +32,10 @@ class CinemaTicketDetailActivity : BaseActivity() {
         binding = ActivityCinemaTicketDetailBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.nav_host_fragment, CineverseHomeFragment()) // fragmentContainer XML'deki ID olmalı
+            .commit()
 
         getIntentExtra()
         bottomNavigation()
@@ -85,16 +90,16 @@ class CinemaTicketDetailActivity : BaseActivity() {
 
         binding.chipNavigationBar.setOnItemSelectedListener { id ->
             when(id) {
-                R.id.ticket -> {
+                R.id.cineverseTicketFragment -> {
                     val intent = Intent (this, CineverseTicketListActivity::class.java)
                     startActivity(intent) }
-                R.id.home -> {
+                R.id.cineverseHomeFragment -> {
                     val intent = Intent (this, CineverseActivity::class.java)
                     startActivity(intent) }
                 R.id.movie -> {
                     val intent = Intent ( this, MainActivity::class.java)
                     startActivity(intent) }
-                R.id.search -> {
+                R.id.cineverseSearchFragment -> {
 
                 }
                 else  -> {

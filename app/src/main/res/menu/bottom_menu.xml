@@ -10,7 +10,7 @@
     />
 
     <item
-        android:id="@+id/search"
+        android:id="@+id/cineverseSearchFragment"
         android:icon="@drawable/search_dark"
         android:title="Search"
         app:cnb_backgroundColor="#FFD194"
@@ -18,7 +18,7 @@
         />
 
     <item
-        android:id="@+id/home"
+        android:id="@+id/cineverseHomeFragment"
         android:icon="@drawable/home_dark"
         android:title="Home"
         app:cnb_backgroundColor="#FFD194"
@@ -26,7 +26,7 @@
         />
 
     <item
-        android:id="@+id/ticket"
+        android:id="@+id/cineverseTicketFragment"
         android:icon="@drawable/ticket_dark"
         android:title="Ticket"
         app:cnb_backgroundColor="#FFD194"
@@ -34,7 +34,7 @@
         />
 
     <item
-        android:id="@+id/account"
+        android:id="@+id/cineverseAccountFragment"
         android:icon="@drawable/account_dark"
         android:title="Account"
         app:cnb_backgroundColor="#FFD194"

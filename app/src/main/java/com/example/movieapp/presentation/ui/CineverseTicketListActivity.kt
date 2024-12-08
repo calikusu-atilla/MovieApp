@@ -60,16 +60,16 @@ class CineverseTicketListActivity : BaseActivity() {
     private fun bottomNavigation() {
         binding.chipNavigationBar.setOnItemSelectedListener { id ->
             when(id) {
-                R.id.ticket -> {
+                R.id.cineverseTicketFragment -> {
                     val intent = Intent (this, CinemaTicketDetailActivity::class.java)
                     startActivity(intent) }
-                R.id.home -> {
+                R.id.cineverseHomeFragment -> {
                     val intent = Intent (this, CineverseActivity::class.java)
                     startActivity(intent) }
                 R.id.movie -> {
                     val intent = Intent ( this, MainActivity::class.java)
                     startActivity(intent) }
-                R.id.search -> {
+                R.id.cineverseSearchFragment -> {
 
                 }
                 else  -> {

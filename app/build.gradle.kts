@@ -141,4 +141,8 @@ dependencies {
     //lottie
     implementation ("com.airbnb.android:lottie:6.1.0")
 
+    //navigation
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.8.4")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.8.4")
+
 }
