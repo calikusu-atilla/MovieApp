@@ -67,7 +67,7 @@ class CineverseHomeFragment : Fragment() {
         viewModel.banners.observe(viewLifecycleOwner, Observer { banners ->
             if (banners.isNotEmpty()) {
                 sliderItems = banners
-                initCineverse(banners[4])
+                initCineverse(banners[0])
                 setupSlider(banners)
             }
             binding.progressBarCineverse.visibility = View.GONE
@@ -78,8 +78,7 @@ class CineverseHomeFragment : Fragment() {
     }
 
     private fun setupSlider(images: List<CineverseModel>) {
-        binding.viewPagerCineverseSlider.adapter =
-            CineverseSliderAdapter(images, binding.viewPagerCineverseSlider)
+        binding.viewPagerCineverseSlider.adapter = CineverseSliderAdapter(images, binding.viewPagerCineverseSlider)
         binding.viewPagerCineverseSlider.clipChildren = false
         binding.viewPagerCineverseSlider.clipToPadding = false
         binding.viewPagerCineverseSlider.offscreenPageLimit = 1
@@ -93,11 +92,13 @@ class CineverseHomeFragment : Fragment() {
             })
         }
         binding.viewPagerCineverseSlider.setPageTransformer(compositePageTransformer)
-        binding.viewPagerCineverseSlider.currentItem = 1
+        binding.viewPagerCineverseSlider.setCurrentItem(binding.viewPagerCineverseSlider.currentItem + 1, true)
         binding.viewPagerCineverseSlider.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 sliderHandler.removeCallbacks(sliderRunnable)
+
+                initCineverse(images[position])
 
                 // Blur arka plan işlemi yapılabilir
                 // Glide kullanarak background güncellemesi buraya eklenebilir.

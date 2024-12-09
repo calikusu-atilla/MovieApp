@@ -13,6 +13,7 @@ import com.example.movieapp.databinding.CineverseSliderViewhoderBinding
 import android.content.Context
 import android.content.Intent
 import com.example.movieapp.domain.model.CineverseModel
+import com.example.movieapp.presentation.ui.CineverseActivity
 import com.example.movieapp.presentation.ui.CineverseDetailActivity
 
 class CineverseSliderAdapter(
