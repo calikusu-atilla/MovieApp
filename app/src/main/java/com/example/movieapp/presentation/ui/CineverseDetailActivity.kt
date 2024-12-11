@@ -37,8 +37,16 @@ class CineverseDetailActivity : BaseActivity() {
 
     private fun setVeriable() {
 
+        if (intent.hasExtra("movieItem")) {
 
-        movieDetail = intent.getParcelableExtra("sliderobject")!!
+            movieDetail = intent.getParcelableExtra("movieItem")!!
+
+        }else if(intent.hasExtra("sliderobject")) {
+
+            movieDetail = intent.getParcelableExtra("sliderobject")!!
+
+        }
+
 
         val requestOptions = RequestOptions().transform(CenterCrop(), GranularRoundedCorners(0f,0f,100f,100f))
         Glide.with(this)
