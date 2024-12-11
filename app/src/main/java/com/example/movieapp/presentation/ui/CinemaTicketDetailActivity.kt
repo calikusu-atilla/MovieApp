@@ -33,9 +33,7 @@ class CinemaTicketDetailActivity : BaseActivity() {
         val view = binding.root
         setContentView(view)
 
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.nav_host_fragment, CineverseHomeFragment()) // fragmentContainer XML'deki ID olmalı
-            .commit()
+
 
         getIntentExtra()
         bottomNavigation()

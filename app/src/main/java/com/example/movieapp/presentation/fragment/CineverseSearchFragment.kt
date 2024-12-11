@@ -9,7 +9,6 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.movieapp.databinding.FragmentCineverseSearchBinding
-import com.example.movieapp.domain.model.CineverseModel
 import com.example.movieapp.presentation.adapter.CineverseSearchAdapter
 import com.example.movieapp.presentation.viewmodel.CineverseSearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
